@@ -1,0 +1,30 @@
+{
+  "decks": [
+    {
+      "title": "Mastra × React × Remotion",
+      "description": "AIで考えて、Reactで作って、Remotionで映像にする",
+      "slides": [
+        {"title":"Mastra × React × Remotion","center":true,"body":[{"type":"p","className":"big","text":"AIで考えて、Reactで作って、Remotionで映像にする"},{"type":"code","text":"Mastra\n  ↓\nReact\n  ↓\nRemotion\n  ↓\nVideo"}]},
+        {"title":"3つを分ける","body":[{"type":"code","text":"Mastra   = Intelligence / Workflow\nReact    = UI / Component\nRemotion = Video / Render"}]},
+        {"title":"Mastra","body":[{"type":"p","className":"big","text":"Agent / Workflow / Tool / Memory"},{"type":"p","text":"AIの判断や処理の流れを組み立てる。"}]},
+        {"title":"React","body":[{"type":"p","className":"big","text":"Component / State / Props"},{"type":"p","text":"画面をコンポーネントとして作る。"}]},
+        {"title":"Remotion","body":[{"type":"p","className":"big","text":"Reactで映像を作る"},{"type":"code","text":"Frame\nTimeline\nComposition\nRender"}]},
+        {"title":"ReactとRemotion","body":[{"type":"p","className":"big","text":"RemotionはReactを映像へ拡張する"},{"type":"code","text":"React Component\n      ↓\nFrameごとの描画\n      ↓\nVideo"}]},
+        {"title":"AIが映像を考える","body":[{"type":"code","text":"Goal\n ↓\nMastra Agent\n ↓\nScene / Action / Timing\n ↓\nStoryboard"}]},
+        {"title":"Storyboardをデータにする","body":[{"type":"code","text":"Scene 01\nScene 02\nScene 03\n   ↓\nJSON / YAML"},{"type":"p","text":"映像の設計をデータとして残す。"}]},
+        {"title":"ReactでSceneを作る","body":[{"type":"code","text":"Scene\n ↓\nReact Component\n ├─ Character\n ├─ Background\n └─ Action"}]},
+        {"title":"RemotionがTimelineにする","body":[{"type":"code","text":"Scene\n ↓\nFrame\n ↓\nTimeline\n ↓\nRender"}]},
+        {"title":"Mastra → React","body":[{"type":"code","text":"Agent\n ↓\nStructured Data\n ↓\nReact Props\n ↓\nComponent"}]},
+        {"title":"React → Remotion","body":[{"type":"code","text":"Component\n ↓\nComposition\n ↓\nFrame\n ↓\nVideo"}]},
+        {"title":"全部つなぐ","body":[{"type":"code","text":"Mastra\n  │ AI / Workflow\n  ↓\nJSON / Scene Data\n  ↓\nReact\n  │ Component\n  ↓\nRemotion\n  │ Timeline / Render\n  ↓\nVideo"}]},
+        {"title":"人間はGoalを決める","body":[{"type":"p","className":"big","text":"Human = Goal / Judgment"},{"type":"code","text":"Human\n ↓\nGoal\n ↓\nMastra\n ↓\nReact / Remotion"}]},
+        {"title":"AIに全部任せない","body":[{"type":"p","className":"big","text":"AI = 制作Workflowを支援する"},{"type":"p","text":"最終的な表現や採用判断は人間が行う。"}]},
+        {"title":"映像もデータになる","body":[{"type":"code","text":"Prompt\nScene\nFrame\nTiming\nAsset\n  ↓\nVideo Dataset"}]},
+        {"title":"同じデータから別の出力","body":[{"type":"code","text":"Scene Data\n ├─ Video\n ├─ GIF\n ├─ Image\n └─ Storyboard"}]},
+        {"title":"GitHubをCanonにする","body":[{"type":"code","text":"GitHub\n ├─ Prompt\n ├─ Scene Data\n ├─ React\n ├─ Remotion\n └─ History"},{"type":"p","text":"制作の正本をGitHubに残す。"}]},
+        {"title":"AWまでつなぐ","body":[{"type":"code","text":"Issue\n ↓\nAW\n ↓\nMastra\n ↓\nReact\n ↓\nRemotion\n ↓\nVerify\n ↓\nDeploy"}]},
+        {"title":"まとめ","center":true,"body":[{"type":"p","className":"big","text":"Mastra = Think / Workflow"},{"type":"p","className":"big","text":"React = Make"},{"type":"p","className":"big","text":"Remotion = Render"},{"type":"p","className":"small","text":"AIが映像を作るのではなく、AIが映像制作のWorkflowを回す。"}]}
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
-import data from "./slides.json";
+import data from "./decks/01-03-slides.json";
 import browserData from "./decks/04-browser.json";
 import githubPluginData from "./decks/05-github-plugin.json";
 import mastraReactRemotionData from "./decks/06-mastra-react-remotion.json";

@@ -61,13 +61,15 @@ build_flow:
 
 canonicality:
   source: github
-  presentation_content: src/App.tsx
+  presentation_content: src/slides.json
+  presentation_renderer: src/slides.tsx
   build_artifact: dist
   deployment_workflow: .github/workflows/deploy.yml
 
 boundary:
   github: owns_source_and_delivery_automation
   react_app: owns_presentation_behavior
+  presentation_data: owns_slide_content
   browser: owns_runtime_interaction
   pages: owns_static_delivery
   human: owns_presentation_control

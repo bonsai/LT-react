@@ -1,0 +1,19 @@
+{
+  "decks": [
+    {
+      "title": "スマホからPushする",
+      "description": "PCを開かずにGitHubへ変更を届ける",
+      "slides": [
+        {"title":"スマホから\nPushする","center":true,"body":[{"type":"p","className":"small","text":"PCがなくても、コードは変更できる"}]},
+        {"title":"GitHubは、開発環境になる","body":[{"type":"p","className":"big","text":"Issue → Edit → Commit"},{"type":"p","text":"スマホのブラウザから、リポジトリのファイルを直接変更できる。"}]},
+        {"title":"スマホでコードを直す","body":[{"type":"code","text":"GitHub\n  ↓\nファイルを開く\n  ↓\nEdit\n  ↓\nCommit changes"},{"type":"p","className":"big","text":"変更はそのままリポジトリへ"}]},
+        {"title":"Pushって何をしている？","body":[{"type":"code","text":"変更\n ↓\ncommit\n ↓\npush\n ↓\nGitHub"},{"type":"p","text":"スマホではGitコマンドを意識しなくても、GitHubのUIから変更を届けられる。"}]},
+        {"title":"Issueから始める","body":[{"type":"code","text":"思いつく\n  ↓\nIssue\n  ↓\nファイルを編集\n  ↓\nCommit"},{"type":"p","className":"big","text":"思いついた場所から、そのまま作業する"}]},
+        {"title":"Pushの先にはActionsがある","body":[{"type":"code","text":"Smartphone\n    ↓\n GitHub\n    ↓\n Actions\n    ↓\n Deploy"},{"type":"p","className":"big","text":"Pushが次の仕事を起動する"}]},
+        {"title":"つまり、PCを開かない日もある","body":[{"type":"p","className":"big","text":"見る → 考える → 直す → Push"},{"type":"p","text":"小さな修正なら、スマホだけでGitHub上の開発サイクルを回せる。"}]},
+        {"title":"開発環境が変わった","body":[{"type":"p","className":"big","text":"PCが開発環境\nではなくなってきた"},{"type":"p","text":"ブラウザ、GitHub、Actions、AI。\n道具がつながると、端末そのものの重要性が下がる。"}]},
+        {"title":"スマホからPushする","center":true,"body":[{"type":"p","className":"big","text":"思いついたらIssue。\n直したらCommit。\nそしてPush。"},{"type":"p","className":"small","text":"GitHubが開発の入口になる。"}]}
+      ]
+    }
+  ]
+}

@@ -9,7 +9,7 @@ const getDeckIndexFromPath = () => {
   if (!match) return null;
 
   const index = Number(match[1]) - 1;
-  return index >= 0 && index < decks.length ? index : null;
+  return index >= 0 && index < decks.length && decks[index].slides.length > 0 ? index : null;
 };
 
 const getBasePath = () => {
@@ -28,6 +28,7 @@ export default function App() {
   }, []);
 
   const openDeck = (index: number) => {
+    if (decks[index].slides.length === 0) return;
     window.history.pushState({}, "", `${getBasePath()}/${index + 1}`);
     setDeckIndex(index);
   };
@@ -52,11 +53,14 @@ export default function App() {
       <div className="deck-list">
         {visibleDecks.map((deck, offset) => {
           const index = start + offset;
+          const isEmpty = deck.slides.length === 0;
           return (
             <button
               className="deck-card"
-              key={deck.title}
+              key={`${index}-${deck.title}`}
               onClick={() => openDeck(index)}
+              disabled={isEmpty}
+              aria-label={isEmpty ? `Deck ${index + 1} empty` : deck.title}
             >
               <span className="deck-number">{index + 1}</span>
               <strong>{deck.title}</strong>

@@ -3,14 +3,15 @@ import { Slide } from "./Slide";
 import { decks } from "./slides";
 import { loadPeer, RemoteController, type PeerConnection, type PeerInstance } from "./RemoteController";
 
-type PresentationProps = { deckIndex: number; onBack: () => void };
+type PresentationProps = { deckIndex: number; remote?: boolean; onBack: () => void };
 type Direction = "forward" | "backward";
 
-const getBasePath = () => import.meta.env.BASE_URL.replace(/\/$/, "");
+export function getRemotePeerId(deckIndex: number) {
+  return `lt-react-${String(deckIndex + 1).padStart(2, "0")}`;
+}
 
-export function Presentation({ deckIndex, onBack }: PresentationProps) {
+export function Presentation({ deckIndex, remote = false, onBack }: PresentationProps) {
   const deck = decks[deckIndex];
-  const remotePeerId = new URLSearchParams(window.location.search).get("remote");
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState<Direction>("forward");
   const [transitionKey, setTransitionKey] = useState(0);
@@ -32,19 +33,12 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
   }, [deckIndex]);
 
   useEffect(() => {
-    if (remotePeerId) return;
+    if (remote) return;
     let peer: PeerInstance | undefined;
     let cancelled = false;
     loadPeer().then((Peer) => {
       if (cancelled) return;
-      peer = new Peer();
-      peer.on("open", () => {
-        const id = peer?.id;
-        if (id) {
-          const remoteUrl = `${window.location.origin}${getBasePath()}/${deckIndex + 1}?remote=${encodeURIComponent(id)}`;
-          console.debug("Remote pairing URL:", remoteUrl);
-        }
-      });
+      peer = new Peer(getRemotePeerId(deckIndex));
       peer.on("connection", (conn: PeerConnection) => {
         conn.on("data", (data: unknown) => {
           const command = String(data);
@@ -58,10 +52,10 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
       });
     }).catch(() => undefined);
     return () => { cancelled = true; peer?.destroy(); };
-  }, [deckIndex, remotePeerId, deck.slides.length]);
+  }, [deckIndex, remote, deck.slides.length]);
 
   useEffect(() => {
-    if (remotePeerId) return;
+    if (remote) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") { onBack(); return; }
       if (["ArrowRight", " ", "PageDown"].includes(event.key)) { event.preventDefault(); next(); }
@@ -71,9 +65,9 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [deck, index, onBack, remotePeerId]);
+  }, [deck, index, onBack, remote]);
 
-  if (remotePeerId) return <RemoteController peerId={remotePeerId} />;
+  if (remote) return <RemoteController peerId={getRemotePeerId(deckIndex)} />;
 
   const slide = deck.slides[index];
   const transitionClass = `slide-transition slide-transition-${direction}`;

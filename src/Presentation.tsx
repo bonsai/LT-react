@@ -57,9 +57,10 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
 
   const slide = deck.slides[index];
   const transitionClass = `slide-transition slide-transition-${direction}`;
+  const rpgClass = deckIndex === 7 ? "rpg-ui" : "";
 
   return (
-    <main
+    <main className={rpgClass}
       onClick={(event) => {
         if (event.target instanceof HTMLButtonElement || event.target instanceof HTMLAnchorElement) return;
         if (event.clientX < window.innerWidth / 2) prev();

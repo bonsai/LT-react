@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import data from "./slides.json";
 import browserData from "./decks/browser.json";
 import githubPluginData from "./decks/github-plugin.json";
+import mastraReactRemotionData from "./decks/mastra-react-remotion.json";
 import promptImagegenFps4Data from "./decks/prompt-imagegen-fps4.json";
 
 export type SlideData = {
@@ -67,6 +68,7 @@ const allDeckData = [
   ...(data as DeckData).decks,
   ...(browserData as DeckData).decks,
   ...(githubPluginData as DeckData).decks,
+  ...(mastraReactRemotionData as DeckData).decks,
   ...(promptImagegenFps4Data as DeckData).decks,
 ];
 

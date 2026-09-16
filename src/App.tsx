@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 type Slide = {
   title?: string;
-  body: React.ReactNode;
+  body: ReactNode;
   center?: boolean;
 };
 
@@ -22,31 +22,36 @@ const slides: Slide[] = [
 export default function App() {
   const [index, setIndex] = useState(0);
 
-  const next = () => setIndex((value) => Math.min(slides.length - 1, value + 1));
-  const prev = () => setIndex((value) => Math.max(0, value - 1));
-
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (["ArrowRight", " ", "PageDown"].includes(event.key)) {
         event.preventDefault();
-        next();
+        setIndex((value) => Math.min(slides.length - 1, value + 1));
       } else if (["ArrowLeft", "PageUp"].includes(event.key)) {
         event.preventDefault();
-        prev();
-      } else if (event.key === "Home") setIndex(0);
-      else if (event.key === "End") setIndex(slides.length - 1);
+        setIndex((value) => Math.max(0, value - 1));
+      } else if (event.key === "Home") {
+        setIndex(0);
+      } else if (event.key === "End") {
+        setIndex(slides.length - 1);
+      }
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  });
+  }, []);
 
   const slide = slides[index];
 
+  const navigate = (direction: "prev" | "next") => {
+    setIndex((value) => direction === "next"
+      ? Math.min(slides.length - 1, value + 1)
+      : Math.max(0, value - 1));
+  };
+
   return (
-    <main onClick={(event) => event.clientX < window.innerWidth / 2 ? prev() : next()}>
+    <main onClick={(event) => navigate(event.clientX < window.innerWidth / 2 ? "prev" : "next")}>
       <section className={`slide ${slide.center ? "center" : ""}`}>
-        {slide.title && <h1>{slide.title.split("\n").map((line) => <span key={line}>{line}<br /></span>)}</h1>}
-        {slide.title && index !== 0 && <h2>{slide.title}</h2>}
+        {slide.title && <h1>{slide.title.split("\n").map((line, lineIndex) => <span key={`${line}-${lineIndex}`}>{line}<br /></span>)}</h1>}
         {slide.body}
         <span className="num">{index + 1} / {slides.length}</span>
       </section>

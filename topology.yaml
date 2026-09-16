@@ -1,0 +1,73 @@
+api_version: "v1"
+id: lt-react
+name: LT React Presentation Topology
+version: "0.1"
+description: >
+  Runtime and delivery topology for the React presentation.
+
+nodes:
+  human:
+    type: actor
+    role: presenter
+  browser:
+    type: runtime
+    role: presentation_client
+  react_app:
+    type: application
+    role: presentation_ui
+  presentation_data:
+    type: data
+    role: slide_content
+  github:
+    type: platform
+    role: source_and_ci
+  pages:
+    type: hosting
+    role: static_delivery
+
+edges:
+  - from: human
+    to: browser
+    relation: interacts_with
+  - from: browser
+    to: react_app
+    relation: runs
+  - from: react_app
+    to: presentation_data
+    relation: reads
+  - from: human
+    to: react_app
+    relation: navigates
+  - from: react_app
+    to: github
+    relation: source_is_canonical
+  - from: github
+    to: pages
+    relation: builds_and_deploys
+  - from: pages
+    to: browser
+    relation: serves
+
+runtime_flow:
+  - human
+  - browser
+  - react_app
+  - presentation_data
+
+build_flow:
+  - github
+  - react_app
+  - pages
+
+canonicality:
+  source: github
+  presentation_content: src/App.tsx
+  build_artifact: dist
+  deployment_workflow: .github/workflows/deploy.yml
+
+boundary:
+  github: owns_source_and_delivery_automation
+  react_app: owns_presentation_behavior
+  browser: owns_runtime_interaction
+  pages: owns_static_delivery
+  human: owns_presentation_control

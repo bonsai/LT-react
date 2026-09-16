@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 
-type PeerConnection = { send: (data: string) => void; close: () => void; on: (event: string, handler: (...args: any[]) => void) => void };
-type PeerInstance = { connect: (id: string) => PeerConnection; destroy: () => void; on: (event: string, handler: (...args: any[]) => void) => void };
-type PeerConstructor = new (id?: string) => PeerInstance;
+export type PeerConnection = { send: (data: string) => void; close: () => void; on: (event: string, handler: (...args: any[]) => void) => void };
+export type PeerInstance = { id?: string; connect: (id: string) => PeerConnection; destroy: () => void; on: (event: string, handler: (...args: any[]) => void) => void };
+export type PeerConstructor = new (id?: string) => PeerInstance;
 
 declare global { interface Window { Peer?: PeerConstructor } }
 
 const PEER_SCRIPT = "https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js";
 
-function loadPeer(): Promise<PeerConstructor> {
+export function loadPeer(): Promise<PeerConstructor> {
   if (window.Peer) return Promise.resolve(window.Peer);
   return new Promise((resolve, reject) => {
     const script = document.createElement("script");

@@ -1,0 +1,18 @@
+{
+  "decks": [{
+    "title": "URLだけでスライドを同期する",
+    "description": "Remote Control × URL State",
+    "slides": [
+      {"title":"URLだけで\nスライドを同期する","center":true,"body":[{"type":"p","className":"small","text":"スマホとPCを、同じURLでつなぐ"}]},
+      {"title":"まず考え方を変える","body":[{"type":"p","className":"big","text":"スライド番号を\nURLにする"},{"type":"code","text":"https://.../14?slide=5"}]},
+      {"title":"URLが状態になる","body":[{"type":"code","text":"?slide=1\n?slide=2\n?slide=3\n        ↓\n現在のスライド"},{"type":"p","text":"ブラウザはURLを状態として扱える。"}]},
+      {"title":"Reactで読む","body":[{"type":"code","text":"const params =\n  new URLSearchParams(location.search)\n\nconst slide =\n  Number(params.get('slide') ?? 1)"},{"type":"p","text":"URL → React stateとして利用する。"}]},
+      {"title":"Reactで書く","body":[{"type":"code","text":"history.pushState(\n  {}, '', `?slide=${next}`\n)"},{"type":"p","text":"次のスライドへ移動するとURLも変わる。"}]},
+      {"title":"ただし、URLだけではリアルタイム同期できない","body":[{"type":"p","className":"big","text":"スマホのURLを変えても\nPCのURLは勝手には変わらない"},{"type":"p","text":"URLは共有できる。でも別端末へ変更を届けるには、何らかの通信経路が必要。"}]},
+      {"title":"そこでURLを入口にする","body":[{"type":"code","text":"📱 URL\n   ↓\n共有された状態\n   ↓\n💻 React Slides"},{"type":"p","text":"URLを開いた瞬間に、同じスライドを表示できる。"}]},
+      {"title":"リアルタイムにするなら","body":[{"type":"code","text":"URL\n ↓\nAPI / WebSocket / SSE\n ↓\nPC Browser\n ↓\nReact state"},{"type":"p","text":"URLだけではなく、URLを基準に通信を足す。"}]},
+      {"title":"実装のポイント","body":[{"type":"ul","items":["URL = 現在位置の共有可能な表現","React = URLを表示状態へ変換","History API = URLを更新","通信 = 別端末へ変更を伝える"]}]},
+      {"title":"URLを正本にする","center":true,"body":[{"type":"p","className":"big","text":"スライド番号をURLに持たせる。\n同期は、そのURLを中心に設計する。"},{"type":"p","className":"small","text":"URL State × React"}]}
+    ]
+  }]
+}

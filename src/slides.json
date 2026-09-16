@@ -4,158 +4,58 @@
       "title": "小規模でもReactの状態を使うべきとき",
       "description": "React stateを3分で理解するLT",
       "slides": [
-        {
-          "title": "小規模でもReactの\n状態を使うべきとき",
-          "center": true,
-          "body": [{ "type": "p", "className": "small", "text": "3分LT" }]
-        },
-        {
-          "title": "Reactの state って何？",
-          "body": [
-            { "type": "p", "className": "big", "text": "「画面を変化させるための記憶」" },
-            { "type": "ul", "items": ["値を覚えておく", "値が変わると React が再描画する"] }
-          ]
-        },
-        {
-          "title": "小さな例：いいねボタン",
-          "body": [
-            { "type": "code", "text": "const [liked, setLiked] = useState(false)\n\n<button onClick={() => setLiked(!liked)}>\n  {liked ? \"♥ いいね済み\" : \"♡ いいね\"}\n</button>" },
-            { "type": "p", "text": "たった1つのボタンでも、UIの状態が変わる。" }
-          ]
-        },
-        {
-          "title": "「普通の変数」ではダメ？",
-          "body": [
-            { "type": "code", "text": "let liked = false\n\nliked = true" },
-            { "type": "p", "className": "big", "text": "値は変わる。でも React はそれを知らない。" },
-            { "type": "p", "text": "UIを更新する必要があるなら、state が候補。" }
-          ]
-        },
-        {
-          "title": "判断基準は「アプリの大きさ」ではない",
-          "body": [
-            { "type": "p", "className": "big", "text": "値が変わる → UIも変えたい？" },
-            { "type": "p", "className": "big", "text": "　　　　　↓ YES" },
-            { "type": "p", "className": "big", "text": "　　　　 state の候補" }
-          ]
-        },
-        {
-          "title": "小規模でも state が効く場面",
-          "body": [{ "type": "ul", "items": ["開く / 閉じる", "選択中の項目", "入力値", "ON / OFF", "タブ", "Loading"] }]
-        },
-        {
-          "title": "ただし state を増やしすぎない",
-          "body": [
-            { "type": "p", "text": "計算できる値は、state にしなくていい。" },
-            { "type": "code", "text": "const visible = isOpen && !disabled" },
-            { "type": "p", "className": "big", "text": "「保存する必要がある値」だけを state にする。" }
-          ]
-        },
-        {
-          "title": "state かどうかの3問",
-          "body": [
-            { "type": "ol", "items": ["ユーザー操作などで変わる？", "その変化を UI に反映したい？", "前の値を覚えておく必要がある？"] },
-            { "type": "p", "className": "big", "text": "YES が揃うほど state。" }
-          ]
-        },
-        {
-          "title": "小さいほどシンプルに始める",
-          "body": [
-            { "type": "p", "className": "big", "text": "useState" },
-            { "type": "p", "text": "↓ 必要になったら" },
-            { "type": "p", "className": "big", "text": "Context" },
-            { "type": "p", "text": "↓ さらに必要なら" },
-            { "type": "p", "className": "big", "text": "External Store" },
-            { "type": "p", "className": "small", "text": "最初から Redux にする必要はない。" }
-          ]
-        },
-        {
-          "title": "まとめ",
-          "center": true,
-          "body": [
-            { "type": "p", "className": "big", "html": "React の state は<br />「画面を変化させるための記憶」" },
-            { "type": "p", "className": "big", "html": "小規模かどうかではなく、<br />UIが時間とともに変化するかで考える。" },
-            { "type": "p", "className": "small", "text": "まず useState。必要になったら広げる。" }
-          ]
-        }
+        {"title":"小規模でもReactの\n状態を使うべきとき","center":true,"body":[{"type":"p","className":"small","text":"3分LT"}]},
+        {"title":"Reactの state って何？","body":[{"type":"p","className":"big","text":"「画面を変化させるための記憶」"},{"type":"ul","items":["値を覚えておく","値が変わると React が再描画する"]}]},
+        {"title":"小さな例：いいねボタン","body":[{"type":"code","text":"const [liked, setLiked] = useState(false)\n\n<button onClick={() => setLiked(!liked)}>\n  {liked ? \"♥ いいね済み\" : \"♡ いいね\"}\n</button>"},{"type":"p","text":"たった1つのボタンでも、UIの状態が変わる。"}]},
+        {"title":"「普通の変数」ではダメ？","body":[{"type":"code","text":"let liked = false\n\nliked = true"},{"type":"p","className":"big","text":"値は変わる。でも React はそれを知らない。"},{"type":"p","text":"UIを更新する必要があるなら、state が候補。"}]},
+        {"title":"判断基準は「アプリの大きさ」ではない","body":[{"type":"p","className":"big","text":"値が変わる → UIも変えたい？"},{"type":"p","className":"big","text":"　　　　　↓ YES"},{"type":"p","className":"big","text":"　　　　 state の候補"}]},
+        {"title":"小規模でも state が効く場面","body":[{"type":"ul","items":["開く / 閉じる","選択中の項目","入力値","ON / OFF","タブ","Loading"]}]},
+        {"title":"ただし state を増やしすぎない","body":[{"type":"p","text":"計算できる値は、state にしなくていい。"},{"type":"code","text":"const visible = isOpen && !disabled"},{"type":"p","className":"big","text":"「保存する必要がある値」だけを state にする。"}]},
+        {"title":"state かどうかの3問","body":[{"type":"ol","items":["ユーザー操作などで変わる？","その変化を UI に反映したい？","前の値を覚えておく必要がある？"]},{"type":"p","className":"big","text":"YES が揃うほど state。"}]},
+        {"title":"小さいほどシンプルに始める","body":[{"type":"p","className":"big","text":"useState"},{"type":"p","text":"↓ 必要になったら"},{"type":"p","className":"big","text":"Context"},{"type":"p","text":"↓ さらに必要なら"},{"type":"p","className":"big","text":"External Store"},{"type":"p","className":"small","text":"最初から Redux にする必要はない。"}]},
+        {"title":"まとめ","center":true,"body":[{"type":"p","className":"big","html":"React の state は<br />「画面を変化させるための記憶」"},{"type":"p","className":"big","html":"小規模かどうかではなく、<br />UIが時間とともに変化するかで考える。"},{"type":"p","className":"small","text":"まず useState。必要になったら広げる。"}]}
       ]
     },
     {
-      "title": "AI時代の小さな開発スタック",
-      "description": "React × GitHub × ChatGPT Web × AW",
-      "slides": [
-        {
-          "title": "STACK",
-          "center": true,
-          "body": [
-            { "type": "p", "className": "big", "text": "React × GitHub × ChatGPT Web × AW" },
-            { "type": "p", "text": "小さな開発をAI時代の開発ループとして捉える。" }
-          ]
-        },
-        {
-          "title": "React = Develop",
-          "body": [
-            { "type": "p", "className": "big", "text": "Reactは開発基盤" },
-            { "type": "code", "text": "React\n ├─ UI\n ├─ State\n ├─ Component\n └─ Browser Runtime" }
-          ]
-        },
-        {
-          "title": "GitHub = Canon",
-          "body": [
-            { "type": "p", "className": "big", "text": "GitHubは正本" },
-            { "type": "code", "text": "GitHub\n ├─ Code\n ├─ README\n ├─ Issues\n ├─ Actions\n └─ History" }
-          ]
-        },
-        {
-          "title": "ChatGPT Web = Intelligence",
-          "body": [
-            { "type": "p", "className": "big", "text": "考える・調べる・整理する・設計する" },
-            { "type": "code", "text": "Human\n  ↓\nChatGPT Web\n  ↓\nGitHub Canon" }
-          ]
-        },
-        {
-          "title": "AW = Agent Workflow",
-          "body": [
-            { "type": "p", "className": "big", "text": "開発後のループも回す" },
-            { "type": "code", "text": "Issue\n ↓\nAW\n ↓\nDebug\n ↓\nFix\n ↓\nTest\n ↓\nDeploy" }
-          ]
-        },
-        {
-          "title": "DebugもAW",
-          "body": [
-            { "type": "p", "text": "CI/CDの失敗をAWが読み、原因を特定し、修正して再実行する。" },
-            { "type": "code", "text": "GitHub Actions\n      ↓\n    Error\n      ↓\n      AW\n      ↓\n  Logs解析\n      ↓\n  原因特定\n      ↓\n     修正\n      ↓\n     Push\n      ↓\n      CI\n      ↓\n    Success" }
-          ]
-        },
-        {
-          "title": "CI/CD = GitHub Actions",
-          "body": [
-            { "type": "code", "text": "git push\n   ↓\nGitHub Actions\n   ↓\nnpm install\n   ↓\nnpm run build\n   ↓\nDeploy\n   ↓\nGitHub Pages" },
-            { "type": "p", "text": "ActionsはCIを実行する場所。AWは前後を制御する。" }
-          ]
-        },
-        {
-          "title": "STACK全体",
-          "body": [{ "type": "code", "text": "Human\n  │ Goal / Judgment\n  ↓\nChatGPT Web\n  │ Intelligence\n  ↓\nGitHub\n  │ Canon\n  ↓\nAW\n  │ Debug → Fix → Test → Deploy\n  ↓\nGitHub Actions\n  │ CI execution\n  ↓\nProduction" }]
-        },
-        {
-          "title": "人間の役割",
-          "body": [
-            { "type": "p", "className": "big", "text": "Goalと最終判断" },
-            { "type": "code", "text": "Goal\n ↓\nChatGPT\n ↓\nGitHub Canon\n ↓\nAW\n ↓\nCI/CD\n ↓\nResult\n ↓\nHuman Judgment" }
-          ]
-        },
-        {
-          "title": "まとめ",
-          "center": true,
-          "body": [
-            { "type": "p", "className": "big", "text": "React = Make" },
-            { "type": "p", "className": "big", "text": "GitHub = Canon" },
-            { "type": "p", "className": "big", "text": "ChatGPT Web = Think" },
-            { "type": "p", "className": "big", "text": "AW = Debug / Fix / Verify / Deploy" },
-            { "type": "p", "className": "small", "text": "ChatGPTが考え、AWが回す。" }
-          ]
-        }
+      "title":"AI時代の小さな開発スタック",
+      "description":"React × GitHub × ChatGPT Web × AW",
+      "slides":[
+        {"title":"STACK","center":true,"body":[{"type":"p","className":"big","text":"React × GitHub × ChatGPT Web × AW"},{"type":"p","text":"小さな開発をAI時代の開発ループとして捉える。"}]},
+        {"title":"React = Develop","body":[{"type":"p","className":"big","text":"Reactは開発基盤"},{"type":"code","text":"React\n ├─ UI\n ├─ State\n ├─ Component\n └─ Browser Runtime"}]},
+        {"title":"GitHub = Canon","body":[{"type":"p","className":"big","text":"GitHubは正本"},{"type":"code","text":"GitHub\n ├─ Code\n ├─ README\n ├─ Issues\n ├─ Actions\n └─ History"}]},
+        {"title":"ChatGPT Web = Intelligence","body":[{"type":"p","className":"big","text":"考える・調べる・整理する・設計する"},{"type":"code","text":"Human\n  ↓\nChatGPT Web\n  ↓\nGitHub Canon"}]},
+        {"title":"AW = Agent Workflow","body":[{"type":"p","className":"big","text":"開発後のループも回す"},{"type":"code","text":"Issue\n ↓\nAW\n ↓\nDebug\n ↓\nFix\n ↓\nTest\n ↓\nDeploy"}]},
+        {"title":"DebugもAW","body":[{"type":"p","text":"CI/CDの失敗をAWが読み、原因を特定し、修正して再実行する。"},{"type":"code","text":"GitHub Actions\n      ↓\n    Error\n      ↓\n      AW\n      ↓\n  Logs解析\n      ↓\n  原因特定\n      ↓\n     修正\n      ↓\n     Push\n      ↓\n      CI\n      ↓\n    Success"}]},
+        {"title":"CI/CD = GitHub Actions","body":[{"type":"code","text":"git push\n   ↓\nGitHub Actions\n   ↓\nnpm install\n   ↓\nnpm run build\n   ↓\nDeploy\n   ↓\nGitHub Pages"},{"type":"p","text":"ActionsはCIを実行する場所。AWは前後を制御する。"}]},
+        {"title":"STACK全体","body":[{"type":"code","text":"Human\n  │ Goal / Judgment\n  ↓\nChatGPT Web\n  │ Intelligence\n  ↓\nGitHub\n  │ Canon\n  ↓\nAW\n  │ Debug → Fix → Test → Deploy\n  ↓\nGitHub Actions\n  │ CI execution\n  ↓\nProduction"}]},
+        {"title":"人間の役割","body":[{"type":"p","className":"big","text":"Goalと最終判断"},{"type":"code","text":"Goal\n ↓\nChatGPT\n ↓\nGitHub Canon\n ↓\nAW\n ↓\nCI/CD\n ↓\nResult\n ↓\nHuman Judgment"}]},
+        {"title":"まとめ","center":true,"body":[{"type":"p","className":"big","text":"React = Make"},{"type":"p","className":"big","text":"GitHub = Canon"},{"type":"p","className":"big","text":"ChatGPT Web = Think"},{"type":"p","className":"big","text":"AW = Debug / Fix / Verify / Deploy"},{"type":"p","className":"small","text":"ChatGPTが考え、AWが回す。"}]}
+      ]
+    },
+    {
+      "title":"Reactを取り巻く歴史",
+      "description":"Reactではなく、その周辺にあるWeb開発の変化",
+      "slides":[
+        {"title":"Reactを取り巻く歴史","center":true,"body":[{"type":"p","className":"big","text":"Reactだけを見ても、現在の開発環境は見えてこない。"},{"type":"p","text":"Web開発の変化を周辺技術から見る。"}]},
+        {"title":"最初はHTMLを返すWeb","body":[{"type":"p","className":"big","text":"Server → HTML → Browser"},{"type":"p","text":"ページを要求し、HTMLを受け取って表示する。"},{"type":"code","text":"Browser\n   ↓ request\nServer\n   ↓ HTML\nBrowser"}]},
+        {"title":"JavaScriptがDOMを動かす","body":[{"type":"p","className":"big","text":"HTMLだけでなく、画面を後から変える。"},{"type":"code","text":"JavaScript\n    ↓\n   DOM\n    ↓\n   UI"}]},
+        {"title":"jQueryの時代","body":[{"type":"p","className":"big","text":"DOM操作を簡単にする"},{"type":"p","text":"セレクタ、イベント、Ajaxなどを一つの書き方で扱いやすくした。"},{"type":"code","text":"$(selector).on(\"click\", ...)"}]},
+        {"title":"AjaxとSPA","body":[{"type":"p","className":"big","text":"ページ全体を毎回読み直さない。"},{"type":"code","text":"Browser\n  ↕ API\nServer\n\nHTMLではなくデータを取得してUIを更新"}]},
+        {"title":"AngularJS","body":[{"type":"p","className":"big","text":"ブラウザ側のアプリケーション化"},{"type":"p","text":"データと画面を結び、Web UIを大きなアプリとして構築する流れが強くなる。"}]},
+        {"title":"DOM操作からUI表現へ","body":[{"type":"p","className":"big","text":"「どうDOMを変えるか」から「どう表示したいか」へ"},{"type":"code","text":"状態\n ↓\nUI\n\n状態が変われば、UIも変わる"}]},
+        {"title":"Reactが注目された理由","body":[{"type":"p","className":"big","text":"UIを状態から表現する"},{"type":"p","text":"Component、宣言的UI、再利用可能な部品という考え方が広がる。"}]},
+        {"title":"JSX","body":[{"type":"p","className":"big","text":"JavaScriptの中でUIを表現する"},{"type":"code","text":"const ui = <button>いいね</button>"},{"type":"p","text":"HTMLとJavaScriptを別世界にせず、UIをコードとして扱う。"}]},
+        {"title":"Component","body":[{"type":"p","className":"big","text":"UIを部品として組み立てる"},{"type":"code","text":"Page\n ├─ Header\n ├─ Content\n └─ Button"},{"type":"p","text":"再利用と分割が、開発の基本単位になる。"}]},
+        {"title":"Flux / Redux","body":[{"type":"p","className":"big","text":"Stateをどう管理するか"},{"type":"code","text":"Action → Store → View\n          ↑\n        Update"},{"type":"p","text":"UIが複雑になるにつれて、状態管理の設計が重要になる。"}]},
+        {"title":"npmとJavaScript ecosystem","body":[{"type":"p","className":"big","text":"ライブラリを組み合わせて作る"},{"type":"code","text":"package.json\n    ↓\nnpm install\n    ↓\nnode_modules"},{"type":"p","text":"Web開発は単体ライブラリから巨大なecosystemへ広がる。"}]},
+        {"title":"TypeScript","body":[{"type":"p","className":"big","text":"JavaScriptを大規模開発へ"},{"type":"code","text":"TypeScript\n    ↓ compile\nJavaScript\n    ↓\nBrowser"},{"type":"p","text":"型を使って、コード規模とチーム開発の複雑さに対応する。"}]},
+        {"title":"Next.js","body":[{"type":"p","className":"big","text":"UIだけでなくWeb全体へ"},{"type":"code","text":"React\n  +\nRouting / Server / Data / Build"},{"type":"p","text":"React周辺にアプリケーション全体を扱うフレームワークが登場する。"}]},
+        {"title":"Vite","body":[{"type":"p","className":"big","text":"開発体験の高速化"},{"type":"code","text":"Source\n  ↓\nVite\n  ↓\nBrowser"},{"type":"p","text":"ビルドツールも開発体験を左右する重要な層になる。"}]},
+        {"title":"React周辺がフレームワーク化","body":[{"type":"p","className":"big","text":"UIライブラリ → 開発プラットフォーム"},{"type":"code","text":"UI\n ↓\nRouting\n ↓\nServer\n ↓\nData\n ↓\nDeploy"}]},
+        {"title":"Server / Client","body":[{"type":"p","className":"big","text":"どこで処理するかを設計する"},{"type":"code","text":"Server\n  │ data / compute\n  ↓\nClient\n  │ interaction\n  ↓\nBrowser"},{"type":"p","text":"Webアプリはブラウザだけの問題ではなくなる。"}]},
+        {"title":"React × Cloud × AI","body":[{"type":"p","className":"big","text":"Frontendの外側が広がる"},{"type":"code","text":"React\n  ↓\nGitHub\n  ↓\nCI/CD\n  ↓\nCloud\n  ↓\nAI"},{"type":"p","text":"現在はUI、コード、クラウド、AIを一つの開発ループとして扱う。"}]},
+        {"title":"歴史からSTACKへ","center":true,"body":[{"type":"p","className":"big","text":"Web\n ↓\nJavaScript\n ↓\nDOM / Ajax / SPA\n ↓\nComponent / State\n ↓\nTypeScript / Framework / Build\n ↓\nCloud / AI"},{"type":"p","className":"big","text":"Reactの歴史ではなく、Reactを取り巻く開発環境の歴史。"}]},
+        {"title":"そして現在","center":true,"body":[{"type":"p","className":"big","text":"React × GitHub × ChatGPT Web × AW"},{"type":"p","text":"歴史を知ると、今のSTACKがどこから来たのかが見えてくる。"}]}
       ]
     }
   ]

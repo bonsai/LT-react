@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import data from "./slides.json";
 import browserData from "./decks/browser.json";
 import githubPluginData from "./decks/github-plugin.json";
@@ -22,11 +22,13 @@ export type Deck = {
 };
 
 type Block = {
-  type: "p" | "ul" | "ol" | "code";
+  type: "p" | "ul" | "ol" | "code" | "aa";
   text?: string;
   html?: string;
   className?: string;
   items?: string[];
+  frames?: string[];
+  interval?: number;
 };
 
 type JsonSlide = {
@@ -43,6 +45,34 @@ type JsonDeck = {
 
 type DeckData = { decks: JsonDeck[] };
 
+function AAAnimation({ frames, interval = 180 }: { frames: string[]; interval?: number }) {
+  const [frame, setFrame] = useState(0);
+
+  useEffect(() => {
+    if (frames.length < 2) return;
+    const timer = window.setInterval(() => {
+      setFrame((value) => (value + 1) % frames.length);
+    }, interval);
+    return () => window.clearInterval(timer);
+  }, [frames, interval]);
+
+  return (
+    <pre
+      aria-label="Animated ASCII art"
+      style={{
+        margin: "1rem auto",
+        minHeight: "8rem",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+      }}
+    >
+      <code>{frames[frame]}</code>
+    </pre>
+  );
+}
+
 const renderBlock = (block: Block): ReactNode => {
   if (block.type === "code") {
     return (
@@ -50,6 +80,10 @@ const renderBlock = (block: Block): ReactNode => {
         <code>{block.text}</code>
       </pre>
     );
+  }
+
+  if (block.type === "aa") {
+    return <AAAnimation key={block.frames?.join("\n")} frames={block.frames ?? [""]} interval={block.interval} />;
   }
 
   if (block.type === "ul" || block.type === "ol") {

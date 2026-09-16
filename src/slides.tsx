@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import data from "./slides.json";
 import browserData from "./decks/browser.json";
 import githubPluginData from "./decks/github-plugin.json";
+import promptImagegenFps4Data from "./decks/prompt-imagegen-fps4.json";
 
 export type SlideData = {
   title: string;
@@ -66,6 +67,7 @@ const allDeckData = [
   ...(data as DeckData).decks,
   ...(browserData as DeckData).decks,
   ...(githubPluginData as DeckData).decks,
+  ...(promptImagegenFps4Data as DeckData).decks,
 ];
 
 export const decks: Deck[] = allDeckData.map((deck) => ({

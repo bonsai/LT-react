@@ -30,13 +30,8 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
     setTransitionKey(0);
   }, [deckIndex]);
 
-  const next = () => {
-    goTo(Math.min(deck.slides.length - 1, index + 1), "forward");
-  };
-
-  const prev = () => {
-    goTo(Math.max(0, index - 1), "backward");
-  };
+  const next = () => goTo(Math.min(deck.slides.length - 1, index + 1), "forward");
+  const prev = () => goTo(Math.max(0, index - 1), "backward");
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -56,7 +51,6 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
         goTo(deck.slides.length - 1, "forward");
       }
     };
-
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [deck, index, onBack]);
@@ -67,25 +61,21 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
   return (
     <main
       onClick={(event) => {
-        if (event.target instanceof HTMLButtonElement) return;
+        if (event.target instanceof HTMLButtonElement || event.target instanceof HTMLAnchorElement) return;
         if (event.clientX < window.innerWidth / 2) prev();
         else next();
       }}
     >
       <div key={transitionKey} className={transitionClass}>
-        <Slide
-          title={slide.title}
-          center={slide.center}
-          number={index + 1}
-          total={deck.slides.length}
-        >
+        <Slide title={slide.title} center={slide.center} number={index + 1} total={deck.slides.length}>
           {slide.body}
         </Slide>
       </div>
 
-      <button className="deck-switch" onClick={onBack}>
-        Decks
-      </button>
+      <a className="bonsai-link" href="https://github.com/bonsai/" target="_blank" rel="noreferrer" aria-label="bonsai GitHub">
+        <span aria-hidden="true">◈</span> bonsai / GitHub
+      </a>
+      <button className="deck-switch" onClick={onBack}>Decks</button>
       <div className="arrow">← → / Space / Home / End / Esc</div>
     </main>
   );

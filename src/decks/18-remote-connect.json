@@ -1,0 +1,20 @@
+{
+  "decks": [
+    {
+      "title": "Remote接続、3つの方式",
+      "description": "URL・QR・ジェスチャーでスマホをスライドリモコンにする",
+      "slides": [
+        {"title":"Remote接続、\n3つの方式","center":true,"body":[{"type":"p","className":"small","text":"スマホをスライドのリモコンにする"}]},
+        {"title":"① URL方式","body":[{"type":"code","text":"https://bonsai.github.io/LT-react/00/01"},{"type":"p","className":"big","text":"URLでDeckを指定"},{"type":"p","text":"/00/:deck がRemoteの入口。"}]},
+        {"title":"② QR方式","body":[{"type":"code","text":"💻 PC\n  QR\n   ↓\n📱 Android\n   ↓\nRemote"},{"type":"p","text":"PCに表示したQRをスマホで読み取る。"}]},
+        {"title":"③ ジェスチャー方式","body":[{"type":"code","text":"→ ↓ → ↑ ←\n\nSwipe × 5\n      ↓\n  Pairing\n      ↓\n   Remote"},{"type":"p","text":"スワイプの組み合わせでペアリングする。"}]},
+        {"title":"入口は3つ、操作は1つ","body":[{"type":"code","text":"URL ─┐\nQR  ─┼→ RemoteController → next / prev / home / end\nGesture ─┘"},{"type":"p","text":"接続方法を変えても、操作APIは共通。"}]},
+        {"title":"Androidなら自動Remote","body":[{"type":"code","text":"/01\n ↓\nAndroidを検出\n ↓\nRemoteController"},{"type":"p","text":"Androidから通常のDeck URLを開いてもRemoteモードへ。"}]},
+        {"title":"PCとスマホの役割","body":[{"type":"code","text":"📱 Remote\n   ↓ 操作\n💻 PC Slide\n   ↓ 表示\n📺 Screen"},{"type":"p","text":"スマホは操作、PCは表示。"}]},
+        {"title":"接続の流れ","body":[{"type":"code","text":"URL / QR / Gesture\n        ↓\n   Remote Mode\n        ↓\n     Pairing\n        ↓\n    Connected\n        ↓\n next / prev / home / end"}]},
+        {"title":"3方式を選べる","body":[{"type":"ul","items":["URL：直接開く","QR：読み取る","Gesture：スワイプでペアリング"]},{"type":"p","className":"big","text":"接続方法 ≠ 操作方法"}]},
+        {"title":"Remoteは1つにする","center":true,"body":[{"type":"p","className":"big","text":"3つの入口\n↓\n1つのRemoteController"},{"type":"p","className":"small","text":"URL × QR × Gesture"}]}
+      ]
+    }
+  ]
+}

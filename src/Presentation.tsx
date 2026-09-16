@@ -7,20 +7,35 @@ type PresentationProps = {
   onBack: () => void;
 };
 
+type Direction = "forward" | "backward";
+
 export function Presentation({ deckIndex, onBack }: PresentationProps) {
   const deck = decks[deckIndex];
   const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState<Direction>("forward");
+  const [transitionKey, setTransitionKey] = useState(0);
+
+  const goTo = (nextIndex: number, nextDirection: Direction) => {
+    setIndex((current) => {
+      if (nextIndex === current) return current;
+      setDirection(nextDirection);
+      setTransitionKey((key) => key + 1);
+      return nextIndex;
+    });
+  };
 
   const next = () => {
-    setIndex((value) => Math.min(deck.slides.length - 1, value + 1));
+    goTo(Math.min(deck.slides.length - 1, index + 1), "forward");
   };
 
   const prev = () => {
-    setIndex((value) => Math.max(0, value - 1));
+    goTo(Math.max(0, index - 1), "backward");
   };
 
   useEffect(() => {
     setIndex(0);
+    setDirection("forward");
+    setTransitionKey(0);
   }, [deckIndex]);
 
   useEffect(() => {
@@ -36,17 +51,18 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
         event.preventDefault();
         prev();
       } else if (event.key === "Home") {
-        setIndex(0);
+        goTo(0, "backward");
       } else if (event.key === "End") {
-        setIndex(deck.slides.length - 1);
+        goTo(deck.slides.length - 1, "forward");
       }
     };
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [deck, onBack]);
+  }, [deck, index, onBack]);
 
   const slide = deck.slides[index];
+  const transitionClass = `slide-transition slide-transition-${direction}`;
 
   return (
     <main
@@ -56,19 +72,18 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
         else next();
       }}
     >
-      <Slide
-        title={slide.title}
-        center={slide.center}
-        number={index + 1}
-        total={deck.slides.length}
-      >
-        {slide.body}
-      </Slide>
+      <div key={transitionKey} className={transitionClass}>
+        <Slide
+          title={slide.title}
+          center={slide.center}
+          number={index + 1}
+          total={deck.slides.length}
+        >
+          {slide.body}
+        </Slide>
+      </div>
 
-      <button
-        className="deck-switch"
-        onClick={onBack}
-      >
+      <button className="deck-switch" onClick={onBack}>
         Decks
       </button>
       <div className="arrow">← → / Space / Home / End / Esc</div>

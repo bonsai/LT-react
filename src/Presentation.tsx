@@ -15,6 +15,8 @@ export function Presentation({ deckIndex, remote = false, onBack }: Presentation
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState<Direction>("forward");
   const [transitionKey, setTransitionKey] = useState(0);
+  const [remoteEnabled, setRemoteEnabled] = useState(false);
+  const [remoteStatus, setRemoteStatus] = useState("Remote待機中");
 
   const goTo = (nextIndex: number, nextDirection: Direction) => {
     setIndex((current) => {
@@ -29,17 +31,20 @@ export function Presentation({ deckIndex, remote = false, onBack }: Presentation
   const prev = () => goTo(Math.max(0, index - 1), "backward");
 
   useEffect(() => {
-    setIndex(0); setDirection("forward"); setTransitionKey(0);
+    setIndex(0); setDirection("forward"); setTransitionKey(0); setRemoteEnabled(false); setRemoteStatus("Remote待機中");
   }, [deckIndex]);
 
   useEffect(() => {
-    if (remote) return;
+    if (remote || !remoteEnabled) return;
     let peer: PeerInstance | undefined;
     let cancelled = false;
+    setRemoteStatus("Remote接続待ち…");
     loadPeer().then((Peer) => {
       if (cancelled) return;
       peer = new Peer(getRemotePeerId(deckIndex));
+      peer.on("open", () => !cancelled && setRemoteStatus("Remote接続待ち"));
       peer.on("connection", (conn: PeerConnection) => {
+        conn.on("open", () => !cancelled && setRemoteStatus("Remote接続済み"));
         conn.on("data", (data: unknown) => {
           const command = String(data);
           if (command === "next") {
@@ -49,10 +54,12 @@ export function Presentation({ deckIndex, remote = false, onBack }: Presentation
           } else if (command === "home") goTo(0, "backward");
           else if (command === "end") goTo(deck.slides.length - 1, "forward");
         });
+        conn.on("close", () => !cancelled && setRemoteStatus("Remote接続待ち"));
       });
-    }).catch(() => undefined);
+      peer.on("error", () => !cancelled && setRemoteStatus("Remote接続エラー"));
+    }).catch(() => !cancelled && setRemoteStatus("PeerJSを読み込めません"));
     return () => { cancelled = true; peer?.destroy(); };
-  }, [deckIndex, remote, deck.slides.length]);
+  }, [deckIndex, remote, remoteEnabled, deck.slides.length]);
 
   useEffect(() => {
     if (remote) return;
@@ -85,6 +92,13 @@ export function Presentation({ deckIndex, remote = false, onBack }: Presentation
       </div>
       <a className="bonsai-link" href="https://github.com/bonsai/" target="_blank" rel="noreferrer" aria-label="bonsai GitHub"><span aria-hidden="true">◈</span> bonsai / GitHub</a>
       <button className="deck-switch" onClick={onBack}>Decks</button>
+      <button
+        className="remote-connect"
+        onClick={() => setRemoteEnabled((enabled) => !enabled)}
+        aria-pressed={remoteEnabled}
+      >
+        {remoteEnabled ? `● ${remoteStatus}` : "Remote接続"}
+      </button>
       <div className="arrow">← → / Space / Home / End / Esc</div>
     </main>
   );

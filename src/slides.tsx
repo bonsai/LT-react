@@ -12,6 +12,7 @@ import empty13Data from "./decks/13-empty.json";
 import empty14Data from "./decks/14-empty.json";
 import empty15Data from "./decks/15-empty.json";
 import empty16Data from "./decks/16-empty.json";
+import remoteConnectData from "./decks/18-remote-connect.json";
 
 export type SlideData = { title: string; body: ReactNode; center?: boolean };
 export type Deck = { title: string; description: string; slides: SlideData[] };
@@ -51,6 +52,7 @@ const allDeckData = [
   ...(empty14Data as DeckData).decks,
   ...(empty15Data as DeckData).decks,
   ...(empty16Data as DeckData).decks,
+  ...(remoteConnectData as DeckData).decks,
 ];
 
 export const decks: Deck[] = allDeckData.map((deck) => ({ ...deck, slides: deck.slides.map((slide) => ({ title: slide.title, center: slide.center, body: <>{slide.body.map(renderBlock)}</> })) }));

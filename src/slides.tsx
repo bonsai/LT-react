@@ -7,9 +7,11 @@ import promptImagegenFps4Data from "./decks/prompt-imagegen-fps4.json";
 import emptyData from "./decks/empty.json";
 import githubBonsaiSummaryData from "./decks/github-bonsai-summary.json";
 import connpassVonsaiSummaryData from "./decks/connpass-vonsai-summary.json";
-import empty11to12Data from "./decks/empty-11-12.json";
-import empty13Data from "./decks/empty-13.json";
-import empty14Data from "./decks/empty-14.json";
+import empty11to12Data from "./decks/11-12-empty.json";
+import empty13Data from "./decks/13-empty.json";
+import empty14Data from "./decks/14-empty.json";
+import empty15Data from "./decks/15-empty.json";
+import empty16Data from "./decks/16-empty.json";
 
 export type SlideData = { title: string; body: ReactNode; center?: boolean };
 export type Deck = { title: string; description: string; slides: SlideData[] };
@@ -47,6 +49,8 @@ const allDeckData = [
   ...(empty11to12Data as DeckData).decks,
   ...(empty13Data as DeckData).decks,
   ...(empty14Data as DeckData).decks,
+  ...(empty15Data as DeckData).decks,
+  ...(empty16Data as DeckData).decks,
 ];
 
 export const decks: Deck[] = allDeckData.map((deck) => ({ ...deck, slides: deck.slides.map((slide) => ({ title: slide.title, center: slide.center, body: <>{slide.body.map(renderBlock)}</> })) }));

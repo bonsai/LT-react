@@ -21,9 +21,14 @@ export function loadPeer(): Promise<PeerConstructor> {
 
 export function RemoteController({ peerId }: { peerId: string }) {
   const [connection, setConnection] = useState<PeerConnection | null>(null);
-  const [status, setStatus] = useState("接続中…");
+  const [status, setStatus] = useState("ペアリング待ち");
 
   useEffect(() => {
+    if (!window.confirm("この端末をスライド操作用にペアリングしますか？")) {
+      setStatus("ペアリングしていません");
+      return;
+    }
+
     let peer: PeerInstance | undefined;
     let cancelled = false;
     loadPeer().then((Peer) => {
@@ -32,7 +37,7 @@ export function RemoteController({ peerId }: { peerId: string }) {
       peer.on("open", () => {
         const conn = peer!.connect(peerId);
         conn.on("open", () => {
-          if (!cancelled) { setConnection(conn); setStatus("接続しました"); }
+          if (!cancelled) { setConnection(conn); setStatus("ペアリングしました"); }
         });
         conn.on("error", () => !cancelled && setStatus("接続できません"));
       });

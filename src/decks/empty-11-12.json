@@ -1,9 +1,20 @@
 {
   "decks": [
     {
-      "title": "",
-      "description": "",
-      "slides": []
+      "title": "Redux / Zustand / Jotaiをどう使い分ける？",
+      "description": "AA animationを例に考える",
+      "slides": [
+        {"title":"Redux / Zustand / Jotaiを\nどう使い分ける？","center":true,"body":[{"type":"p","className":"small","text":"AA animationを例に考える"}]},
+        {"title":"まず、AAアニメーションなら","body":[{"type":"aa","interval":180,"frames":["  /\\_/\\\n ( o.o )\n  > ^ <","   /\\_/\\\n  ( o.o )\n   > ^ <","    /\\_/\\\n   ( o.o )\n    > ^ <","   /\\_/\\\n  ( o.o )\n   > ^ <"]},{"type":"p","className":"big","text":"必要なのは「現在のframe」だけ"}]},
+        {"title":"Componentの中だけなら","body":[{"type":"code","text":"function AAAnimation() {\n  const [frame, setFrame] = useState(0)\n\n  // frameを切り替える\n}"},{"type":"p","className":"big","text":"まずは React の useState で十分"}]},
+        {"title":"でも、frameを共有したくなったら？","body":[{"type":"p","className":"big","text":"AのAAとBのAAが\n同じ再生位置を見る"},{"type":"code","text":"AA A ──┐\n      ├── frame\nAA B ──┘"},{"type":"p","text":"Componentをまたぐ状態になってくる。"}]},
+        {"title":"Zustandなら","body":[{"type":"code","text":"const useAnimation = create((set) => ({\n  frame: 0,\n  next: () => set(s => ({\n    frame: s.frame + 1\n  }))\n}))"},{"type":"p","className":"big","text":"小さな共有stateをシンプルに持つ"}]},
+        {"title":"Jotaiなら","body":[{"type":"code","text":"const frameAtom = atom(0)\n\nconst [frame, setFrame] = useAtom(frameAtom)"},{"type":"p","className":"big","text":"状態をatom単位で分ける"},{"type":"p","text":"AAのframe、再生中、速度……と独立させやすい。"}]},
+        {"title":"Reduxなら","body":[{"type":"code","text":"state\n └─ animation\n     ├─ frame\n     ├─ playing\n     └─ speed\n\nAction → Reducer → State"},{"type":"p","className":"big","text":"状態更新の流れを明示的に管理する"}]},
+        {"title":"AAを大きなアプリにすると","body":[{"type":"aa","interval":220,"frames":["  (•_•)\n  /|\\\n  / ","  (•_•)\n  /|\\\n   / ","  (•_•)\n  /|\\\n    / "]},{"type":"code","text":"player\n ├─ currentFrame\n ├─ playing\n ├─ speed\n ├─ selectedAA\n └─ history"},{"type":"p","text":"状態が増え、複数の画面・機能で共有するなら選択肢が増える。"}]},
+        {"title":"使い分けを考える","body":[{"type":"ul","items":["useState：Component内の小さな状態","Zustand：シンプルな共有state","Jotai：atom単位で細かく分割したいstate","Redux：大規模な状態と更新フローを明示的に管理"]},{"type":"p","className":"small","text":"ライブラリから選ぶのではなく、状態の広がり方から考える。"}]},
+        {"title":"AA Animationで見ると","center":true,"body":[{"type":"p","className":"big","text":"1つのAA → useState\n共有する → Zustand / Jotai\n大きな状態管理 → Redux"},{"type":"aa","interval":160,"frames":["   /\\_/\\\n  ( o.o )\n   > ^ <","    /\\_/\\\n   ( o.o )\n    > ^ <","     /\\_/\\\n    ( o.o )\n     > ^ <"]},{"type":"p","className":"small","text":"AAは小さい。でも、状態設計の教材になる。"}]}
+      ]
     },
     {
       "title": "バイブコーダーがReactで詰めて設計してみた",

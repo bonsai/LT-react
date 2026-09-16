@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-type PeerConnection = { send: (data: string) => void; close: () => void };
+type PeerConnection = { send: (data: string) => void; close: () => void; on: (event: string, handler: (...args: any[]) => void) => void };
 type PeerInstance = { connect: (id: string) => PeerConnection; destroy: () => void; on: (event: string, handler: (...args: any[]) => void) => void };
 type PeerConstructor = new (id?: string) => PeerInstance;
 
@@ -31,10 +31,10 @@ export function RemoteController({ peerId }: { peerId: string }) {
       peer = new Peer();
       peer.on("open", () => {
         const conn = peer!.connect(peerId);
-        conn.on?.("open", () => {
+        conn.on("open", () => {
           if (!cancelled) { setConnection(conn); setStatus("接続しました"); }
         });
-        conn.on?.("error", () => !cancelled && setStatus("接続できません"));
+        conn.on("error", () => !cancelled && setStatus("接続できません"));
       });
       peer.on("error", () => !cancelled && setStatus("接続できません"));
     }).catch(() => !cancelled && setStatus("PeerJSを読み込めません"));

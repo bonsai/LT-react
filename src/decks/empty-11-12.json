@@ -6,9 +6,20 @@
       "slides": []
     },
     {
-      "title": "",
-      "description": "",
-      "slides": []
+      "title": "バイブコーダーがReactで詰めて設計してみた",
+      "description": "なんとなく始めて、react-tsumeteで一問ずつ設計する",
+      "slides": [
+        {"title":"バイブコーダーが\nReactで詰めて設計してみた","center":true,"body":[{"type":"p","className":"small","text":"12"}]},
+        {"title":"最初は、バイブ","body":[{"type":"p","className":"big","text":"「なんか、こういうの作りたい」"},{"type":"p","text":"仕様書はない。\n設計もまだない。\nでも、作りたいものはある。"}]},
+        {"title":"そのままコードを書かない","body":[{"type":"p","className":"big","text":"いきなり React を書く前に、\n一度、詰める。"},{"type":"code","text":"Idea\n ↓\n質問\n ↓\n回答\n ↓\n設計"}]},
+        {"title":"react-tsumete","body":[{"type":"p","className":"big","text":"Reactに詰めてもらう"},{"type":"p","text":"実装前の曖昧なところを、\n一問ずつ質問するスキル。"},{"type":"code","text":"react-tsumete\n        ↓\n     1問ずつ"}]},
+        {"title":"最初の質問","body":[{"type":"p","className":"big","text":"それ、誰が使う？"},{"type":"p","text":"ユーザーが決まると、\n必要な画面と操作が見えてくる。"}]},
+        {"title":"次の質問","body":[{"type":"p","className":"big","text":"何が変化する？"},{"type":"p","text":"UIの変化が決まると、\nstateの候補が見えてくる。"},{"type":"code","text":"User Action\n   ↓\n State\n   ↓\n  UI"}]},
+        {"title":"さらに詰める","body":[{"type":"ul","items":["このComponentの責務は？","propsとstateはどこに置く？","データはどこから来る？","本当にこのライブラリが必要？","デモと本番の境界は？"]},{"type":"p","className":"small","text":"全部、一度に決めない。"}]},
+        {"title":"バイブが設計になる","body":[{"type":"code","text":"なんとなく\n   ↓\n問い詰める\n   ↓\n目的\n   ↓\n仕様\n   ↓\nComponent / State / Data\n   ↓\n実装"},{"type":"p","text":"質問の履歴そのものが設計になる。"}]},
+        {"title":"そしてコードを書く","body":[{"type":"p","className":"big","text":"設計ができたら、\nReactを書く。"},{"type":"code","text":"Component\n ├─ Props\n ├─ State\n └─ UI"},{"type":"p","text":"AIはコードを書く前の設計にも使える。"}]},
+        {"title":"バイブで始めて、Reactで詰める。","center":true,"body":[{"type":"p","className":"big","text":"バイブで始めて、\nReactで詰める。"},{"type":"p","className":"big","text":"react-tsumete"},{"type":"p","className":"small","text":"問い詰めることを、スキルにする。"}]}
+      ]
     }
   ]
 }

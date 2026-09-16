@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import data from "./slides.json";
+import browserData from "./decks/browser.json";
+import githubPluginData from "./decks/github-plugin.json";
 
 export type SlideData = {
   title: string;
@@ -33,6 +35,8 @@ type JsonDeck = {
   slides: JsonSlide[];
 };
 
+type DeckData = { decks: JsonDeck[] };
+
 const renderBlock = (block: Block): ReactNode => {
   if (block.type === "code") {
     return (
@@ -58,7 +62,13 @@ const renderBlock = (block: Block): ReactNode => {
   );
 };
 
-export const decks: Deck[] = (data.decks as JsonDeck[]).map((deck) => ({
+const allDeckData = [
+  ...(data as DeckData).decks,
+  ...(browserData as DeckData).decks,
+  ...(githubPluginData as DeckData).decks,
+];
+
+export const decks: Deck[] = allDeckData.map((deck) => ({
   ...deck,
   slides: deck.slides.map((slide) => ({
     title: slide.title,

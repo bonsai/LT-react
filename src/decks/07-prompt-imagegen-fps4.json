@@ -1,0 +1,30 @@
+{
+  "decks": [
+    {
+      "title": "Prompt Management × ImageGen × FPS4",
+      "description": "プロンプトをCanonにして、画像から4 FPSの映像を作る",
+      "slides": [
+        {"title":"Prompt Management × ImageGen × FPS4","center":true,"body":[{"type":"p","className":"big","text":"Prompt → Image → Frame → Video"},{"type":"p","text":"プロンプトを管理して、4 FPSの映像制作につなげる。"}]},
+        {"title":"なぜプロンプトを管理するのか","body":[{"type":"p","className":"big","text":"プロンプトも制作物である"},{"type":"p","text":"生成結果だけでなく、何を指示したかを履歴として残す。"}]},
+        {"title":"プロンプトもコードである","body":[{"type":"code","text":"Prompt\n ├─ ID\n ├─ Version\n ├─ Parameters\n └─ Output"},{"type":"p","text":"再利用・比較・変更履歴を管理する。"}]},
+        {"title":"Prompt ID","body":[{"type":"code","text":"rabbit-enter-v1\nrabbit-bounce-v1\napple-hop-v1"},{"type":"p","text":"名前を持たせると、生成物を追跡できる。"}]},
+        {"title":"Prompt Version","body":[{"type":"code","text":"rabbit-enter-v1\n        ↓\nrabbit-enter-v2\n        ↓\nrabbit-enter-v3"},{"type":"p","text":"同じ意図でも変更を履歴として残す。"}]},
+        {"title":"Scene / Character / Style","body":[{"type":"code","text":"Prompt\n ├─ Scene\n ├─ Character\n ├─ Action\n ├─ Style\n └─ Camera"}]},
+        {"title":"Frameをデータにする","body":[{"type":"code","text":"Frame 000 → Image\nFrame 001 → Image\nFrame 002 → Image\nFrame 003 → Image"},{"type":"p","text":"動画を画像列として扱う。"}]},
+        {"title":"1 Frame = 1 Image","body":[{"type":"p","className":"big","text":"Frame番号と画像を対応させる"},{"type":"code","text":"frame: 0\nprompt_id: rabbit-enter-v1\nimage: frame-000.png"}]},
+        {"title":"FPSとは何か","body":[{"type":"p","className":"big","text":"Frames Per Second"},{"type":"p","text":"1秒間に何枚のFrameを表示するか。"}]},
+        {"title":"4 FPSなら1秒4枚","body":[{"type":"code","text":"4 FPS\n↓\n1 sec = 4 frames\n0.00  0.25  0.50  0.75 sec"}]},
+        {"title":"8秒なら32枚","body":[{"type":"code","text":"4 FPS × 8 sec = 32 frames"},{"type":"p","text":"秒数とFPSから必要な画像枚数が決まる。"}]},
+        {"title":"ImageGenでFrameを作る","body":[{"type":"code","text":"Prompt\n  ↓\nImageGen\n  ↓\nframe-000.png\nframe-001.png\nframe-002.png"}]},
+        {"title":"同じPromptを固定する","body":[{"type":"p","className":"big","text":"変えるのはFrame差分だけ"},{"type":"p","text":"キャラクター・画風・カメラなどの条件を固定すると連続性を管理しやすい。"}]},
+        {"title":"Frameごとの差分を管理する","body":[{"type":"code","text":"Frame 0  → 入口\nFrame 1  → 少し前進\nFrame 2  → 少し前進\nFrame 3  → 少し前進"},{"type":"p","text":"動きをFrame単位の差分として設計する。"}]},
+        {"title":"Prompt → Image Dataset","body":[{"type":"code","text":"Prompt Canon\n      ↓\n   ImageGen\n      ↓\nFrame Dataset\n      ├─ prompt_id\n      ├─ frame\n      └─ image"}]},
+        {"title":"Dataset → Remotion","body":[{"type":"code","text":"Frame Dataset\n      ↓\n    Remotion\n      ↓\n   Timeline\n      ↓\n     Video"}]},
+        {"title":"Remotion → MP4","body":[{"type":"code","text":"4 FPS\n  ↓\nFrame sequence\n  ↓\nRemotion render\n  ↓\nMP4 / GIF"}]},
+        {"title":"GitHubをPrompt Canonにする","body":[{"type":"code","text":"GitHub\n ├─ prompts\n ├─ frames\n ├─ metadata\n ├─ Remotion\n └─ History"},{"type":"p","text":"プロンプトも画像制作の正本として管理する。"}]},
+        {"title":"AWで生成・検証する","body":[{"type":"code","text":"Prompt\n ↓\nAW\n ↓\nImageGen\n ↓\nFrame Check\n ↓\nRemotion\n ↓\nVerify"}]},
+        {"title":"Promptが映像制作のCanonになる","center":true,"body":[{"type":"p","className":"big","text":"Prompt = Canon"},{"type":"p","className":"big","text":"Image = Frame"},{"type":"p","className":"big","text":"FPS = Timeline"},{"type":"p","className":"big","text":"Remotion = Render"},{"type":"p","className":"small","text":"プロンプトから再現可能な映像制作システムへ。"}]}
+      ]
+    }
+  ]
+}

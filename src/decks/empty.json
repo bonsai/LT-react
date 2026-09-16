@@ -1,18 +1,18 @@
 {
   "decks": [
     {
-      "title": "小規模でもReactの状態を使うべきとき",
-      "description": "React state × AA animation",
+      "title": "ReactでAAアニメーションをつくる",
+      "description": "AA animation × React",
       "slides": [
-        {"title":"小規模でもReactの\n状態を使うべきとき","center":true,"body":[{"type":"p","className":"small","text":"AA animation"}]},
-        {"title":"Reactの state って何？","body":[{"type":"p","className":"big","text":"「画面を変化させるための記憶」"},{"type":"ul","items":["値を覚えておく","値が変わると React が再描画する"]}]},
-        {"title":"AAを動かしてみる","body":[{"type":"p","className":"big","text":"同じAAでも、frameが変わる。"},{"type":"aa","interval":180,"frames":["   /\\_/\\\n  ( o.o )\n   > ^ <","    /\\_/\\\n   ( o.o )\n    > ^ <","     /\\_/\\\n    ( o.o )\n     > ^ <","    /\\_/\\\n   ( o.o )\n    > ^ <"]},{"type":"code","text":"const [frame, setFrame] = useState(0)\n\nsetFrame((value) => value + 1)"}]},
-        {"title":"普通の変数ではなく state","body":[{"type":"code","text":"const [frame, setFrame] = useState(0)\n\nsetInterval(() => {\n  setFrame((value) => value + 1)\n}, 180)"},{"type":"p","className":"big","text":"frameが変わる → UIも変わる"}]},
-        {"title":"判断基準は「アプリの大きさ」ではない","body":[{"type":"p","className":"big","text":"値が変わる → UIも変えたい？"},{"type":"p","className":"big","text":"　　　　　↓ YES"},{"type":"p","className":"big","text":"　　　　 state の候補"}]},
-        {"title":"小規模でも state が効く場面","body":[{"type":"ul","items":["AA animation の frame","開く / 閉じる","選択中の項目","入力値","ON / OFF","Loading"]}]},
-        {"title":"state かどうかの3問","body":[{"type":"ol","items":["ユーザー操作などで変わる？","その変化を UI に反映したい？","前の値を覚えておく必要がある？"]},{"type":"aa","interval":260,"frames":["  (•_•)\n  /|\\\n  / ","  (•_•)\n  /|\\\n   / ","  (•_•)\n  /|\\\n    / ","  (•_•)\n  /|\\\n   / ","  (•_•)\n  /|\\\n  / "]},{"type":"p","className":"big","text":"YES が揃うほど state。"}]},
-        {"title":"AAもReact Componentになる","body":[{"type":"code","text":"AAAnimation\n ├─ frames\n ├─ interval\n └─ frame(state)\n       ↓\n      <pre>AA</pre>"},{"type":"p","text":"アニメーションも「状態 → UI」として考えられる。"}]},
-        {"title":"まとめ","center":true,"body":[{"type":"p","className":"big","text":"React の state は\n「画面を変化させるための記憶」"},{"type":"aa","interval":220,"frames":["  (•_•)\n  /|\\\n   / ","  (•_•)\n  /|\\\n  /  ","  (•_•)\n  /|\\\n /   "]},{"type":"p","className":"small","text":"AAが動く。その裏でstateが変わっている。"}]}
+        {"title":"ReactでAAアニメーションをつくる","center":true,"body":[{"type":"p","className":"small","text":"AAを動かすところから始める"}]},
+        {"title":"まず、AAを絵として用意する","body":[{"type":"p","className":"big","text":"AAは「文字の絵」"},{"type":"aa","interval":500,"frames":["  /\\_/\\\n ( o.o )\n  > ^ <","   /\\_/\\\n  ( o.o )\n   > ^ <","    /\\_/\\\n   ( o.o )\n    > ^ <"]},{"type":"p","text":"動かすには、少しずつ違う絵を並べればいい。"}]},
+        {"title":"フレームを並べる","body":[{"type":"code","text":"frames = [\n  AA_1,\n  AA_2,\n  AA_3,\n  AA_2\n]"},{"type":"p","className":"big","text":"アニメーション = フレームの連続"}]},
+        {"title":"React Componentにする","body":[{"type":"code","text":"function AAAnimation() {\n  return <pre>{frames[frame]}</pre>\n}"},{"type":"p","className":"big","text":"AAをひとつの部品として扱う"}]},
+        {"title":"現在のフレームを持つ","body":[{"type":"code","text":"const [frame, setFrame] = useState(0)"},{"type":"p","className":"big","text":"いま何枚目を表示しているか？"},{"type":"aa","interval":220,"frames":["  (•_•)\n  /|\\\n  / ","  (•_•)\n  /|\\\n   / ","  (•_•)\n  /|\\\n    / ","  (•_•)\n  /|\\\n   / "]}]},
+        {"title":"一定時間ごとに次へ","body":[{"type":"code","text":"useEffect(() => {\n  const id = setInterval(() => {\n    setFrame(value => (value + 1) % frames.length)\n  }, 180)\n  return () => clearInterval(id)\n}, [])"},{"type":"p","className":"big","text":"frameを順番に切り替える"}]},
+        {"title":"すると、AAが動き出す","body":[{"type":"aa","interval":180,"frames":["   /\\_/\\\n  ( o.o )\n   > ^ <","    /\\_/\\\n   ( o.o )\n    > ^ <","     /\\_/\\\n    ( o.o )\n     > ^ <","    /\\_/\\\n   ( o.o )\n    > ^ <"]},{"type":"p","className":"big","text":"文字だけでもアニメーションになる"}]},
+        {"title":"AA Animationの構造","body":[{"type":"code","text":"AAAnimation\n ├─ frames      ← 絵の列\n ├─ interval    ← 再生速度\n ├─ frame       ← 現在位置\n └─ <pre>       ← 表示"},{"type":"p","text":"Reactは「フレームを切り替えて表示する」役を担う。"}]},
+        {"title":"完成","center":true,"body":[{"type":"aa","interval":160,"frames":["   /\\_/\\\n  ( o.o )\n   > ^ <","    /\\_/\\\n   ( o.o )\n    > ^ <","     /\\_/\\\n    ( o.o )\n     > ^ <","    /\\_/\\\n   ( o.o )\n    > ^ <"]},{"type":"p","className":"big","text":"AAをフレームにする\n↓\nReactで切り替える\n↓\nアニメーションになる"},{"type":"p","className":"small","text":"React × AA Animation"}]}
       ]
     }
   ]

@@ -11,7 +11,7 @@
         {"title":"vonsai","body":[{"type":"p","className":"big","text":"観測 → 整理 → 利用"},{"type":"p","text":"外部サービスから得た情報を、再利用できるデータとして蓄積する。"}]},
         {"title":"取得とCanonを分ける","body":[{"type":"code","text":"connpass\n   ↓ fetch\nvonsai\n   ↓ normalize\nGitHub\n   ↓ Canon"}]},
         {"title":"BQML化する","body":[{"type":"p","className":"big","text":"Event → Semantic Data"},{"type":"p","text":"イベントを単なるHTMLではなく、検索・分析できる構造化データとして扱う。"}]},
-        {"title":"イベントの関係","body":[{"type":"code","text":"Organizer\n    ↓ hosts\nEvent\n    ├─ held_at → Venue\n    ├─ starts_at → Time\n    └─ source → URL"}]},
+        {"title":"イベントの関係","body":[{"type":"code","text":"Organizer\n    ↓ hosts\nEvent\n    ├─ held_at → Venue\n    ├─ starts_at → Time\n    └─ source → URL"},{"type":"aa","interval":260,"frames":["Organizer\n    │\n    ▼\n  Event\n  /   \\\nVenue   Time","Organizer\n    │\n    ├────► Event\n    │      /   \\\n    │   Venue   Time","Organizer ──hosts──► Event\n                       │\n                 ┌─────┴─────┐\n                 ▼           ▼\n               Venue        Time","Organizer\n    │\n    ▼\n  Event ─────► URL\n  /   \\\nVenue   Time"]}]},
         {"title":"Workflow","body":[{"type":"code","text":"Fetch\n ↓\nParse\n ↓\nNormalize\n ↓\nValidate\n ↓\nSave\n ↓\nResearch / Search"}]},
         {"title":"AIを入れる場所","body":[{"type":"p","className":"big","text":"AIは意味づけを支援する"},{"type":"p","text":"取得した事実を勝手に置き換えず、分類・要約・関係抽出などを補助する。"}]},
         {"title":"connpassから広げる","body":[{"type":"code","text":"connpass\n ├─ events\n ├─ organizers\n └─ communities\n        ↓\n     Event DB\n        ↓\n   Research / Calendar / Search"}]},

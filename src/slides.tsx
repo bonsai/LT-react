@@ -8,98 +8,30 @@ import emptyData from "./decks/empty.json";
 import githubBonsaiSummaryData from "./decks/github-bonsai-summary.json";
 import connpassVonsaiSummaryData from "./decks/connpass-vonsai-summary.json";
 import empty11to12Data from "./decks/empty-11-12.json";
+import empty13Data from "./decks/empty-13.json";
 
-export type SlideData = {
-  title: string;
-  body: ReactNode;
-  center?: boolean;
-};
-
-export type Deck = {
-  title: string;
-  description: string;
-  slides: SlideData[];
-};
-
-type Block = {
-  type: "p" | "ul" | "ol" | "code" | "aa";
-  text?: string;
-  html?: string;
-  className?: string;
-  items?: string[];
-  frames?: string[];
-  interval?: number;
-};
-
-type JsonSlide = {
-  title: string;
-  center?: boolean;
-  body: Block[];
-};
-
-type JsonDeck = {
-  title: string;
-  description: string;
-  slides: JsonSlide[];
-};
-
+export type SlideData = { title: string; body: ReactNode; center?: boolean };
+export type Deck = { title: string; description: string; slides: SlideData[] };
+type Block = { type: "p" | "ul" | "ol" | "code" | "aa"; text?: string; html?: string; className?: string; items?: string[]; frames?: string[]; interval?: number };
+type JsonSlide = { title: string; center?: boolean; body: Block[] };
+type JsonDeck = { title: string; description: string; slides: JsonSlide[] };
 type DeckData = { decks: JsonDeck[] };
 
 function AAAnimation({ frames, interval = 180 }: { frames: string[]; interval?: number }) {
   const [frame, setFrame] = useState(0);
-
   useEffect(() => {
     if (frames.length < 2) return;
-    const timer = window.setInterval(() => {
-      setFrame((value) => (value + 1) % frames.length);
-    }, interval);
+    const timer = window.setInterval(() => setFrame((value) => (value + 1) % frames.length), interval);
     return () => window.clearInterval(timer);
   }, [frames, interval]);
-
-  return (
-    <pre
-      aria-label="Animated ASCII art"
-      style={{
-        margin: "1rem auto",
-        minHeight: "8rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
-      }}
-    >
-      <code>{frames[frame]}</code>
-    </pre>
-  );
+  return <pre aria-label="Animated ASCII art" style={{ margin: "1rem auto", minHeight: "8rem", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}><code>{frames[frame]}</code></pre>;
 }
 
 const renderBlock = (block: Block): ReactNode => {
-  if (block.type === "code") {
-    return (
-      <pre key={block.text}>
-        <code>{block.text}</code>
-      </pre>
-    );
-  }
-
-  if (block.type === "aa") {
-    return <AAAnimation key={block.frames?.join("\n")} frames={block.frames ?? [""]} interval={block.interval} />;
-  }
-
-  if (block.type === "ul" || block.type === "ol") {
-    const List = block.type;
-    return (
-      <List key={block.items?.join("|")}>
-        {block.items?.map((item) => <li key={item}>{item}</li>)}
-      </List>
-    );
-  }
-
-  return (
-    <p key={block.text ?? block.html} className={block.className}>
-      {block.html ? <span dangerouslySetInnerHTML={{ __html: block.html }} /> : block.text}
-    </p>
-  );
+  if (block.type === "code") return <pre key={block.text}><code>{block.text}</code></pre>;
+  if (block.type === "aa") return <AAAnimation key={block.frames?.join("\n")} frames={block.frames ?? [""]} interval={block.interval} />;
+  if (block.type === "ul" || block.type === "ol") { const List = block.type; return <List key={block.items?.join("|")}>{block.items?.map((item) => <li key={item}>{item}</li>)}</List>; }
+  return <p key={block.text ?? block.html} className={block.className}>{block.html ? <span dangerouslySetInnerHTML={{ __html: block.html }} /> : block.text}</p>;
 };
 
 const allDeckData = [
@@ -112,13 +44,7 @@ const allDeckData = [
   ...(githubBonsaiSummaryData as DeckData).decks,
   ...(connpassVonsaiSummaryData as DeckData).decks,
   ...(empty11to12Data as DeckData).decks,
+  ...(empty13Data as DeckData).decks,
 ];
 
-export const decks: Deck[] = allDeckData.map((deck) => ({
-  ...deck,
-  slides: deck.slides.map((slide) => ({
-    title: slide.title,
-    center: slide.center,
-    body: <>{slide.body.map(renderBlock)}</>,
-  })),
-}));
+export const decks: Deck[] = allDeckData.map((deck) => ({ ...deck, slides: deck.slides.map((slide) => ({ title: slide.title, center: slide.center, body: <>{slide.body.map(renderBlock)}</> })) }));

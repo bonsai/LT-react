@@ -4,12 +4,24 @@ import { decks } from "./slides";
 
 const SLOTS_PER_PAGE = 4;
 
-const getDeckIndexFromPath = () => {
-  const match = window.location.pathname.match(/\/(\d+)\/?$/);
-  if (!match) return null;
+type Route = { deckIndex: number; remote: boolean } | null;
 
-  const index = Number(match[1]) - 1;
-  return index >= 0 && index < decks.length && decks[index].slides.length > 0 ? index : null;
+const getRoute = (): Route => {
+  const path = window.location.pathname;
+  const remoteMatch = path.match(/\/(\d+)\/(\d+)\/?$/);
+  if (remoteMatch && Number(remoteMatch[1]) === 0) {
+    const deckIndex = Number(remoteMatch[2]) - 1;
+    return deckIndex >= 0 && deckIndex < decks.length && decks[deckIndex].slides.length > 0
+      ? { deckIndex, remote: true }
+      : null;
+  }
+
+  const match = path.match(/\/(\d+)\/?$/);
+  if (!match) return null;
+  const deckIndex = Number(match[1]) - 1;
+  return deckIndex >= 0 && deckIndex < decks.length && decks[deckIndex].slides.length > 0
+    ? { deckIndex, remote: false }
+    : null;
 };
 
 const getBasePath = () => {
@@ -18,11 +30,11 @@ const getBasePath = () => {
 };
 
 export default function App() {
-  const [deckIndex, setDeckIndex] = useState<number | null>(getDeckIndexFromPath);
+  const [route, setRoute] = useState<Route>(getRoute);
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    const onPopState = () => setDeckIndex(getDeckIndexFromPath());
+    const onPopState = () => setRoute(getRoute());
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
@@ -30,16 +42,16 @@ export default function App() {
   const openDeck = (index: number) => {
     if (decks[index].slides.length === 0) return;
     window.history.pushState({}, "", `${getBasePath()}/${index + 1}`);
-    setDeckIndex(index);
+    setRoute({ deckIndex: index, remote: false });
   };
 
   const backToMenu = () => {
     window.history.pushState({}, "", `${getBasePath()}/`);
-    setDeckIndex(null);
+    setRoute(null);
   };
 
-  if (deckIndex !== null) {
-    return <Presentation deckIndex={deckIndex} onBack={backToMenu} />;
+  if (route !== null) {
+    return <Presentation deckIndex={route.deckIndex} remote={route.remote} onBack={backToMenu} />;
   }
 
   const pageCount = Math.ceil(decks.length / SLOTS_PER_PAGE);
@@ -70,23 +82,9 @@ export default function App() {
         })}
       </div>
       <nav className="deck-pagination" aria-label="Deck pages">
-        <button
-          className="deck-page-button"
-          onClick={() => setPage((value) => Math.max(0, value - 1))}
-          disabled={page === 0}
-        >
-          ←
-        </button>
-        <span className="small">
-          {page + 1} / {pageCount}
-        </span>
-        <button
-          className="deck-page-button"
-          onClick={() => setPage((value) => Math.min(pageCount - 1, value + 1))}
-          disabled={page === pageCount - 1}
-        >
-          →
-        </button>
+        <button className="deck-page-button" onClick={() => setPage((value) => Math.max(0, value - 1))} disabled={page === 0}>←</button>
+        <span className="small">{page + 1} / {pageCount}</span>
+        <button className="deck-page-button" onClick={() => setPage((value) => Math.min(pageCount - 1, value + 1))} disabled={page === pageCount - 1}>→</button>
       </nav>
       <p className="small">{start + 1}–{Math.min(start + SLOTS_PER_PAGE, decks.length)} / {decks.length}</p>
     </main>

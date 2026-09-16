@@ -46,15 +46,17 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
       peer.on("connection", (conn: PeerConnection) => {
         conn.on("data", (data: unknown) => {
           const command = String(data);
-          if (command === "next") next();
-          else if (command === "prev") prev();
-          else if (command === "home") goTo(0, "backward");
+          if (command === "next") {
+            setIndex((current) => { const nextIndex = Math.min(deck.slides.length - 1, current + 1); if (nextIndex !== current) { setDirection("forward"); setTransitionKey((key) => key + 1); } return nextIndex; });
+          } else if (command === "prev") {
+            setIndex((current) => { const nextIndex = Math.max(0, current - 1); if (nextIndex !== current) { setDirection("backward"); setTransitionKey((key) => key + 1); } return nextIndex; });
+          } else if (command === "home") goTo(0, "backward");
           else if (command === "end") goTo(deck.slides.length - 1, "forward");
         });
       });
     }).catch(() => setRemoteUrl(""));
     return () => { cancelled = true; peer?.destroy(); };
-  }, [deckIndex, remotePeerId, deck.slides.length, index]);
+  }, [deckIndex, remotePeerId, deck.slides.length]);
 
   useEffect(() => {
     if (remotePeerId) return;

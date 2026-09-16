@@ -4,6 +4,7 @@ import browserData from "./decks/browser.json";
 import githubPluginData from "./decks/github-plugin.json";
 import mastraReactRemotionData from "./decks/mastra-react-remotion.json";
 import promptImagegenFps4Data from "./decks/prompt-imagegen-fps4.json";
+import emptyData from "./decks/empty.json";
 
 export type SlideData = {
   title: string;
@@ -70,6 +71,7 @@ const allDeckData = [
   ...(githubPluginData as DeckData).decks,
   ...(mastraReactRemotionData as DeckData).decks,
   ...(promptImagegenFps4Data as DeckData).decks,
+  ...(emptyData as DeckData).decks,
 ];
 
 export const decks: Deck[] = allDeckData.map((deck) => ({

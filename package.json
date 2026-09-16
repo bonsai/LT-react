@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@qrcode/svg": "latest",
     "@types/qrcode": "latest",
     "@vitejs/plugin-react": "latest",
     "qrcode": "latest",

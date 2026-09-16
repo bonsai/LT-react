@@ -1,0 +1,162 @@
+{
+  "decks": [
+    {
+      "title": "小規模でもReactの状態を使うべきとき",
+      "description": "React stateを3分で理解するLT",
+      "slides": [
+        {
+          "title": "小規模でもReactの\n状態を使うべきとき",
+          "center": true,
+          "body": [{ "type": "p", "className": "small", "text": "3分LT" }]
+        },
+        {
+          "title": "Reactの state って何？",
+          "body": [
+            { "type": "p", "className": "big", "text": "「画面を変化させるための記憶」" },
+            { "type": "ul", "items": ["値を覚えておく", "値が変わると React が再描画する"] }
+          ]
+        },
+        {
+          "title": "小さな例：いいねボタン",
+          "body": [
+            { "type": "code", "text": "const [liked, setLiked] = useState(false)\n\n<button onClick={() => setLiked(!liked)}>\n  {liked ? \"♥ いいね済み\" : \"♡ いいね\"}\n</button>" },
+            { "type": "p", "text": "たった1つのボタンでも、UIの状態が変わる。" }
+          ]
+        },
+        {
+          "title": "「普通の変数」ではダメ？",
+          "body": [
+            { "type": "code", "text": "let liked = false\n\nliked = true" },
+            { "type": "p", "className": "big", "text": "値は変わる。でも React はそれを知らない。" },
+            { "type": "p", "text": "UIを更新する必要があるなら、state が候補。" }
+          ]
+        },
+        {
+          "title": "判断基準は「アプリの大きさ」ではない",
+          "body": [
+            { "type": "p", "className": "big", "text": "値が変わる → UIも変えたい？" },
+            { "type": "p", "className": "big", "text": "　　　　　↓ YES" },
+            { "type": "p", "className": "big", "text": "　　　　 state の候補" }
+          ]
+        },
+        {
+          "title": "小規模でも state が効く場面",
+          "body": [{ "type": "ul", "items": ["開く / 閉じる", "選択中の項目", "入力値", "ON / OFF", "タブ", "Loading"] }]
+        },
+        {
+          "title": "ただし state を増やしすぎない",
+          "body": [
+            { "type": "p", "text": "計算できる値は、state にしなくていい。" },
+            { "type": "code", "text": "const visible = isOpen && !disabled" },
+            { "type": "p", "className": "big", "text": "「保存する必要がある値」だけを state にする。" }
+          ]
+        },
+        {
+          "title": "state かどうかの3問",
+          "body": [
+            { "type": "ol", "items": ["ユーザー操作などで変わる？", "その変化を UI に反映したい？", "前の値を覚えておく必要がある？"] },
+            { "type": "p", "className": "big", "text": "YES が揃うほど state。" }
+          ]
+        },
+        {
+          "title": "小さいほどシンプルに始める",
+          "body": [
+            { "type": "p", "className": "big", "text": "useState" },
+            { "type": "p", "text": "↓ 必要になったら" },
+            { "type": "p", "className": "big", "text": "Context" },
+            { "type": "p", "text": "↓ さらに必要なら" },
+            { "type": "p", "className": "big", "text": "External Store" },
+            { "type": "p", "className": "small", "text": "最初から Redux にする必要はない。" }
+          ]
+        },
+        {
+          "title": "まとめ",
+          "center": true,
+          "body": [
+            { "type": "p", "className": "big", "html": "React の state は<br />「画面を変化させるための記憶」" },
+            { "type": "p", "className": "big", "html": "小規模かどうかではなく、<br />UIが時間とともに変化するかで考える。" },
+            { "type": "p", "className": "small", "text": "まず useState。必要になったら広げる。" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "AI時代の小さな開発スタック",
+      "description": "React × GitHub × ChatGPT Web × AW",
+      "slides": [
+        {
+          "title": "STACK",
+          "center": true,
+          "body": [
+            { "type": "p", "className": "big", "text": "React × GitHub × ChatGPT Web × AW" },
+            { "type": "p", "text": "小さな開発をAI時代の開発ループとして捉える。" }
+          ]
+        },
+        {
+          "title": "React = Develop",
+          "body": [
+            { "type": "p", "className": "big", "text": "Reactは開発基盤" },
+            { "type": "code", "text": "React\n ├─ UI\n ├─ State\n ├─ Component\n └─ Browser Runtime" }
+          ]
+        },
+        {
+          "title": "GitHub = Canon",
+          "body": [
+            { "type": "p", "className": "big", "text": "GitHubは正本" },
+            { "type": "code", "text": "GitHub\n ├─ Code\n ├─ README\n ├─ Issues\n ├─ Actions\n └─ History" }
+          ]
+        },
+        {
+          "title": "ChatGPT Web = Intelligence",
+          "body": [
+            { "type": "p", "className": "big", "text": "考える・調べる・整理する・設計する" },
+            { "type": "code", "text": "Human\n  ↓\nChatGPT Web\n  ↓\nGitHub Canon" }
+          ]
+        },
+        {
+          "title": "AW = Agent Workflow",
+          "body": [
+            { "type": "p", "className": "big", "text": "開発後のループも回す" },
+            { "type": "code", "text": "Issue\n ↓\nAW\n ↓\nDebug\n ↓\nFix\n ↓\nTest\n ↓\nDeploy" }
+          ]
+        },
+        {
+          "title": "DebugもAW",
+          "body": [
+            { "type": "p", "text": "CI/CDの失敗をAWが読み、原因を特定し、修正して再実行する。" },
+            { "type": "code", "text": "GitHub Actions\n      ↓\n    Error\n      ↓\n      AW\n      ↓\n  Logs解析\n      ↓\n  原因特定\n      ↓\n     修正\n      ↓\n     Push\n      ↓\n      CI\n      ↓\n    Success" }
+          ]
+        },
+        {
+          "title": "CI/CD = GitHub Actions",
+          "body": [
+            { "type": "code", "text": "git push\n   ↓\nGitHub Actions\n   ↓\nnpm install\n   ↓\nnpm run build\n   ↓\nDeploy\n   ↓\nGitHub Pages" },
+            { "type": "p", "text": "ActionsはCIを実行する場所。AWは前後を制御する。" }
+          ]
+        },
+        {
+          "title": "STACK全体",
+          "body": [{ "type": "code", "text": "Human\n  │ Goal / Judgment\n  ↓\nChatGPT Web\n  │ Intelligence\n  ↓\nGitHub\n  │ Canon\n  ↓\nAW\n  │ Debug → Fix → Test → Deploy\n  ↓\nGitHub Actions\n  │ CI execution\n  ↓\nProduction" }]
+        },
+        {
+          "title": "人間の役割",
+          "body": [
+            { "type": "p", "className": "big", "text": "Goalと最終判断" },
+            { "type": "code", "text": "Goal\n ↓\nChatGPT\n ↓\nGitHub Canon\n ↓\nAW\n ↓\nCI/CD\n ↓\nResult\n ↓\nHuman Judgment" }
+          ]
+        },
+        {
+          "title": "まとめ",
+          "center": true,
+          "body": [
+            { "type": "p", "className": "big", "text": "React = Make" },
+            { "type": "p", "className": "big", "text": "GitHub = Canon" },
+            { "type": "p", "className": "big", "text": "ChatGPT Web = Think" },
+            { "type": "p", "className": "big", "text": "AW = Debug / Fix / Verify / Deploy" },
+            { "type": "p", "className": "small", "text": "ChatGPTが考え、AWが回す。" }
+          ]
+        }
+      ]
+    }
+  ]
+}

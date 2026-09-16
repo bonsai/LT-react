@@ -1,0 +1,19 @@
+{
+  "decks": [
+    {
+      "title": "スマホでPCのスライドを操作する",
+      "description": "Remote Control × React Slides",
+      "slides": [
+        {"title":"スマホで\nPCのスライドを操作する","center":true,"body":[{"type":"p","className":"small","text":"スマホをリモコンにする"}]},
+        {"title":"発表中、PCの前にいないといけない？","body":[{"type":"p","className":"big","text":"スライドを進める\nためにPCへ戻る"},{"type":"p","text":"これ、ちょっと面倒。"}]},
+        {"title":"スマホをリモコンにする","body":[{"type":"code","text":"📱 Smartphone\n      │\n      │ 次へ / 戻る\n      ▼\n💻 PC Browser\n      │\n      ▼\n  React Slides"},{"type":"p","className":"big","text":"操作するのはスマホ。\n表示するのはPC。"}]},
+        {"title":"スマホ側はシンプルでいい","body":[{"type":"ul","items":["← 前のスライド","→ 次のスライド","▶ 発表開始","13 / 14 / 15番を開く"]},{"type":"p","text":"必要なのは「スライドをどう動かすか」だけ。"}]},
+        {"title":"PC側はReact","body":[{"type":"code","text":"currentSlide\n     ↓\n  React State\n     ↓\n   Slide UI"},{"type":"p","className":"big","text":"現在のスライドをstateとして持つ"}]},
+        {"title":"どうやって連携する？","body":[{"type":"code","text":"📱\n ↓\nWebSocket / SSE / API\n ↓\n💻\n ↓\nReact setState"},{"type":"p","text":"スマホの操作をPCブラウザへ届ける。"}]},
+        {"title":"Pushともつながる","body":[{"type":"code","text":"スマホ\n ├─ GitHubを操作\n ├─ コードをPush\n └─ スライドを操作\n          ↓\n       PC Browser"},{"type":"p","className":"big","text":"スマホが開発端末と発表リモコンになる"}]},
+        {"title":"GitHub → Web → Remote","body":[{"type":"code","text":"GitHub\n  ↓\nActions / Pages\n  ↓\nReact Slides\n  ↑\nRemote Control\n  ↑\nSmartphone"},{"type":"p","text":"コードと発表環境をWebでつなぐ。"}]},
+        {"title":"PCを操作するために、PCの前に座らない","center":true,"body":[{"type":"p","className":"big","text":"スマホで操作して、\nPCのブラウザで発表する。"},{"type":"p","className":"small","text":"Remote Control × React"}]}
+      ]
+    }
+  ]
+}

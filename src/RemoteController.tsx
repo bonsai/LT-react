@@ -16,7 +16,7 @@ export function loadPeer(): Promise<PeerConstructor> {
   });
 }
 
-type PairingStep = "gesture" | "connecting" | "connected" | "cancelled";
+type PairingStep = "gesture" | "ready" | "connecting" | "connected" | "cancelled";
 const GESTURE = ["→", "↓", "→", "↑", "←"];
 
 export function RemoteController({ peerId }: { peerId: string }) {
@@ -47,15 +47,27 @@ export function RemoteController({ peerId }: { peerId: string }) {
   }, [peerId, step]);
 
   const addGesture = (value: string) => {
-    const next = [...gesture, value]; setGesture(next);
+    const next = [...gesture, value];
+    setGesture(next);
     if (next.length === GESTURE.length) {
-      if (next.every((item, i) => item === GESTURE[i])) { setStep("connecting"); setStatus("接続中…"); }
-      else { setGesture([]); setStatus("違います。もう一度"); }
+      if (next.every((item, i) => item === GESTURE[i])) {
+        setStep("ready");
+        setStatus("ペアリング準備完了");
+      } else {
+        setGesture([]);
+        setStatus("違います。もう一度");
+      }
     }
   };
+
+  const connect = () => {
+    setStep("connecting");
+    setStatus("接続中…");
+  };
+
   const send = (command: string) => connection?.send(command);
 
-  if (step === "gesture") return <main className="remote-controller"><div className="remote-card">
+  if (step === "gesture" || step === "ready") return <main className="remote-controller"><div className="remote-card">
     <p className="small">LT React · Pairing</p><h1>ペアリング</h1><p>この順番を入力してください</p>
     <div style={{ fontSize: "2rem", letterSpacing: ".4rem", margin: "1.5rem 0" }}>{GESTURE.join(" ")}</div>
     <p className="remote-status">{gesture.join(" ") || "待機中"}</p>
@@ -63,6 +75,7 @@ export function RemoteController({ peerId }: { peerId: string }) {
       <button onClick={() => addGesture("←")}>←</button><button onClick={() => addGesture("→")}>→</button>
       <button onClick={() => addGesture("↑")}>↑</button><button onClick={() => addGesture("↓")}>↓</button>
     </div>
+    {step === "ready" && <button className="remote-connect" onClick={connect}>接続する</button>}
   </div></main>;
 
   if (step === "cancelled") return <main className="remote-controller"><div className="remote-card"><h1>Remote</h1><p>{status}</p></div></main>;

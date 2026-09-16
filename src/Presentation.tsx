@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import QRCode from "qrcode";
 import { Slide } from "./Slide";
 import { decks } from "./slides";
 import { loadPeer, RemoteController, type PeerConnection, type PeerInstance } from "./RemoteController";
@@ -15,6 +16,8 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
   const [direction, setDirection] = useState<Direction>("forward");
   const [transitionKey, setTransitionKey] = useState(0);
   const [remoteUrl, setRemoteUrl] = useState("");
+  const [qrDataUrl, setQrDataUrl] = useState("");
+  const [showQr, setShowQr] = useState(false);
 
   const goTo = (nextIndex: number, nextDirection: Direction) => {
     setIndex((current) => {
@@ -59,6 +62,14 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
   }, [deckIndex, remotePeerId, deck.slides.length]);
 
   useEffect(() => {
+    if (!remoteUrl) {
+      setQrDataUrl("");
+      return;
+    }
+    QRCode.toDataURL(remoteUrl, { width: 280, margin: 2 }).then(setQrDataUrl).catch(() => setQrDataUrl(""));
+  }, [remoteUrl]);
+
+  useEffect(() => {
     if (remotePeerId) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") { onBack(); return; }
@@ -88,12 +99,28 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
         <Slide title={slide.title} center={slide.center} number={index + 1} total={deck.slides.length}>{slide.body}</Slide>
       </div>
       {remoteUrl && deckIndex === 13 && (
-        <div className="remote-info">
-          <strong>📱 Remote</strong>
-          <span>スマホで開く：</span>
-          <input readOnly value={remoteUrl} onFocus={(event) => event.currentTarget.select()} />
-          <button onClick={() => navigator.clipboard?.writeText(remoteUrl)}>URLをコピー</button>
-        </div>
+        <>
+          <div className="remote-info">
+            <strong>📱 Remote</strong>
+            <button
+              onClick={() => setShowQr((visible) => !visible)}
+              style={{ fontSize: "1rem", padding: "0.4rem 0.8rem", cursor: "pointer" }}
+            >
+              {showQr ? "QRを閉じる" : "📱 QR"}
+            </button>
+            <input readOnly value={remoteUrl} onFocus={(event) => event.currentTarget.select()} />
+            <button onClick={() => navigator.clipboard?.writeText(remoteUrl)}>URLをコピー</button>
+          </div>
+          {showQr && qrDataUrl && (
+            <div
+              onClick={(event) => event.stopPropagation()}
+              style={{ position: "fixed", right: "1rem", bottom: "4rem", zIndex: 20, background: "#fff", padding: "1rem", borderRadius: "0.75rem", boxShadow: "0 4px 24px rgba(0,0,0,.3)", textAlign: "center" }}
+            >
+              <img src={qrDataUrl} alt="スマホ操作用QRコード" width={280} height={280} />
+              <div style={{ color: "#111", marginTop: "0.5rem", fontWeight: 600 }}>スマホで読み取って操作</div>
+            </div>
+          )}
+        </>
       )}
       <a className="bonsai-link" href="https://github.com/bonsai/" target="_blank" rel="noreferrer" aria-label="bonsai GitHub"><span aria-hidden="true">◈</span> bonsai / GitHub</a>
       <button className="deck-switch" onClick={onBack}>Decks</button>

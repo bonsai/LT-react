@@ -5,6 +5,9 @@ import githubPluginData from "./decks/github-plugin.json";
 import mastraReactRemotionData from "./decks/mastra-react-remotion.json";
 import promptImagegenFps4Data from "./decks/prompt-imagegen-fps4.json";
 import emptyData from "./decks/empty.json";
+import githubBonsaiSummaryData from "./decks/github-bonsai-summary.json";
+import connpassVonsaiSummaryData from "./decks/connpass-vonsai-summary.json";
+import empty11to12Data from "./decks/empty-11-12.json";
 
 export type SlideData = {
   title: string;
@@ -72,6 +75,9 @@ const allDeckData = [
   ...(mastraReactRemotionData as DeckData).decks,
   ...(promptImagegenFps4Data as DeckData).decks,
   ...(emptyData as DeckData).decks,
+  ...(githubBonsaiSummaryData as DeckData).decks,
+  ...(connpassVonsaiSummaryData as DeckData).decks,
+  ...(empty11to12Data as DeckData).decks,
 ];
 
 export const decks: Deck[] = allDeckData.map((deck) => ({

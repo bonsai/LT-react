@@ -10,7 +10,7 @@
         {"title":"普通の変数ではなく state","body":[{"type":"code","text":"const [frame, setFrame] = useState(0)\n\nsetInterval(() => {\n  setFrame((value) => value + 1)\n}, 180)"},{"type":"p","className":"big","text":"frameが変わる → UIも変わる"}]},
         {"title":"判断基準は「アプリの大きさ」ではない","body":[{"type":"p","className":"big","text":"値が変わる → UIも変えたい？"},{"type":"p","className":"big","text":"　　　　　↓ YES"},{"type":"p","className":"big","text":"　　　　 state の候補"}]},
         {"title":"小規模でも state が効く場面","body":[{"type":"ul","items":["AA animation の frame","開く / 閉じる","選択中の項目","入力値","ON / OFF","Loading"]}]},
-        {"title":"state かどうかの3問","body":[{"type":"ol","items":["ユーザー操作などで変わる？","その変化を UI に反映したい？","前の値を覚えておく必要がある？"]},{"type":"p","className":"big","text":"YES が揃うほど state。"}]},
+        {"title":"state かどうかの3問","body":[{"type":"ol","items":["ユーザー操作などで変わる？","その変化を UI に反映したい？","前の値を覚えておく必要がある？"]},{"type":"aa","interval":260,"frames":["  (•_•)\n  /|\\\n  / ","  (•_•)\n  /|\\\n   / ","  (•_•)\n  /|\\\n    / ","  (•_•)\n  /|\\\n   / ","  (•_•)\n  /|\\\n  / "]},{"type":"p","className":"big","text":"YES が揃うほど state。"}]},
         {"title":"AAもReact Componentになる","body":[{"type":"code","text":"AAAnimation\n ├─ frames\n ├─ interval\n └─ frame(state)\n       ↓\n      <pre>AA</pre>"},{"type":"p","text":"アニメーションも「状態 → UI」として考えられる。"}]},
         {"title":"まとめ","center":true,"body":[{"type":"p","className":"big","text":"React の state は\n「画面を変化させるための記憶」"},{"type":"aa","interval":220,"frames":["  (•_•)\n  /|\\\n   / ","  (•_•)\n  /|\\\n  /  ","  (•_•)\n  /|\\\n /   "]},{"type":"p","className":"small","text":"AAが動く。その裏でstateが変わっている。"}]}
       ]

@@ -27,6 +27,12 @@ Reactと、その周辺の開発環境・歴史・使い方をテーマにした
 
 - [Presentation](https://bonsai.github.io/LT-react/)
 
+## Remote
+
+スマホからPCのスライドを操作するRemote URL（現在のセッション）。
+
+[スマホ操作用 Remote](https://bonsai.github.io/LT-react/14?remote=b7447b3d-20bd-4837-a375-d23d25be98ad)
+
 ## QR
 
 スマホで読み取ってスライドへ。

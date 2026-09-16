@@ -24,6 +24,12 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
     });
   };
 
+  useEffect(() => {
+    setIndex(0);
+    setDirection("forward");
+    setTransitionKey(0);
+  }, [deckIndex]);
+
   const next = () => {
     goTo(Math.min(deck.slides.length - 1, index + 1), "forward");
   };
@@ -31,12 +37,6 @@ export function Presentation({ deckIndex, onBack }: PresentationProps) {
   const prev = () => {
     goTo(Math.max(0, index - 1), "backward");
   };
-
-  useEffect(() => {
-    setIndex(0);
-    setDirection("forward");
-    setTransitionKey(0);
-  }, [deckIndex]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {

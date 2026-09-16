@@ -1,0 +1,68 @@
+api_version: "v1"
+id: lt-react
+name: LT React Presentation Ontology
+version: "0.1"
+description: >
+  Semantic model for the React state presentation application.
+
+concepts:
+  presentation:
+    description: A navigable slide presentation.
+  slide:
+    description: One presentation page with title and body content.
+  slide_content:
+    description: The semantic payload rendered inside a slide.
+  presentation_state:
+    description: Current position and interaction state of the presentation.
+  navigation:
+    description: User interaction that changes the current slide.
+  react_state:
+    description: UI memory represented by React state.
+  derived_value:
+    description: A value computed from existing state rather than stored independently.
+  deployment:
+    description: The build artifact published as a static site.
+
+properties:
+  presentation:
+    - slides
+    - current_slide
+    - navigation
+  slide:
+    - title
+    - body
+    - center
+    - number
+  presentation_state:
+    - index
+  deployment:
+    - artifact
+    - public_url
+
+relations:
+  contains:
+    domain: presentation
+    range: slide
+  renders:
+    domain: slide
+    range: slide_content
+  has_state:
+    domain: presentation
+    range: presentation_state
+  navigates:
+    domain: navigation
+    range: presentation_state
+  represents:
+    domain: react_state
+    range: presentation_state
+  derives:
+    domain: derived_value
+    range: react_state
+  publishes:
+    domain: deployment
+    range: presentation
+
+principles:
+  - UI-changing memory belongs to state.
+  - Values derivable from state should not be duplicated as state.
+  - Presentation content is data; presentation navigation is behavior.

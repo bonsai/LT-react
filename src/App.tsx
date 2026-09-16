@@ -6,6 +6,8 @@ const SLOTS_PER_PAGE = 4;
 
 type Route = { deckIndex: number; remote: boolean } | null;
 
+const isAndroid = () => /Android/i.test(navigator.userAgent);
+
 const getRoute = (): Route => {
   const path = window.location.pathname;
   const remoteMatch = path.match(/\/(\d+)\/(\d+)\/?$/);
@@ -20,7 +22,7 @@ const getRoute = (): Route => {
   if (!match) return null;
   const deckIndex = Number(match[1]) - 1;
   return deckIndex >= 0 && deckIndex < decks.length && decks[deckIndex].slides.length > 0
-    ? { deckIndex, remote: false }
+    ? { deckIndex, remote: isAndroid() }
     : null;
 };
 
@@ -42,7 +44,7 @@ export default function App() {
   const openDeck = (index: number) => {
     if (decks[index].slides.length === 0) return;
     window.history.pushState({}, "", `${getBasePath()}/${index + 1}`);
-    setRoute({ deckIndex: index, remote: false });
+    setRoute({ deckIndex: index, remote: isAndroid() });
   };
 
   const backToMenu = () => {
